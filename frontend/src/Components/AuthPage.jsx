@@ -27,9 +27,10 @@ export default function AuthPage({ setIsAuthenticated }) {
     if (response.success == true) {
       setUser(response.user);
       setIsAuthenticated(true);
-        navigate('/home');
+      navigate('/home');
+      return;
     }
-    alert(`${response.message}`);
+    alert(response.message || 'Unable to log in');
         
          
     
@@ -45,9 +46,10 @@ export default function AuthPage({ setIsAuthenticated }) {
     if(response.success == true){
       setUser(response.user);
       setIsAuthenticated(true);
-        navigate('/home');
+      navigate('/home');
+      return;
     }
-    alert(`${response.message}`);
+    alert(response.message || 'Unable to register');
   }
 
   // Reusable input class

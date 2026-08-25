@@ -8,7 +8,10 @@ const logoutUser = async () => {
         });
         return response.data;
     }catch(error){
-        return error;
+        return error.response?.data ?? {
+            success: false,
+            message: 'Unable to log out'
+        };
     }
 }
 

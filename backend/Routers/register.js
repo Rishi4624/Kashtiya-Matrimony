@@ -36,6 +36,7 @@ const register =  async (req, res) => {
             httpOnly: true,
             secure: true,
             sameSite: "none",
+            path: "/api",
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         })
         return res.status(201).json({ message: 'User registered successfully', success: true, user: savedUser });

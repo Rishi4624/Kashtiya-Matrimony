@@ -15,10 +15,10 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
         navigate('/login');
         return;
       }
-      alert(response.message);
+      alert(response.message || 'Unable to log out');
     } catch (error) {
       console.log('logout error:', error);
-      alert(error);
+      alert('Unable to log out');
     }
   };
 
