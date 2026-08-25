@@ -3,7 +3,7 @@ async function loginUser(email, password){
 
     try{
         console.log("email:", email, "password:", password);
-        let response = await axios.post(`${import.meta.env.VITE_AXIOS_API}`, { email, password }, {
+        let response = await axios.post(`${import.meta.env.VITE_AXIOS_API}/api/login`, { email, password }, {
         withCredentials: true
       });
         console.log({response});
