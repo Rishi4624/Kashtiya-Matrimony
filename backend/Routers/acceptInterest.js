@@ -12,15 +12,21 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid user' });
         }
 
-        const likedByUser = await User.exists({ _id: userId, likes: currentUserId });
-        if (!likedByUser) {
-            return res.status(403).json({ success: false, message: 'This user has not shown interest in you' });
+        const acceptedUser = await User.exists({ _id: userId });
+        if (!acceptedUser) {
+            return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        await User.updateOne(
-            { _id: currentUserId },
-            { $addToSet: { likes: userId } }
-        );
+        await Promise.all([
+            User.updateOne(
+                { _id: currentUserId },
+                { $addToSet: { acceptedChats: userId } }
+            ),
+            User.updateOne(
+                { _id: userId },
+                { $addToSet: { acceptedChats: currentUserId } }
+            )
+        ]);
 
         return res.status(200).json({ success: true, message: 'Interest accepted' });
     } catch (error) {

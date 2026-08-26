@@ -70,14 +70,18 @@ app.use('/api/accept-interest', Auth, require('./Routers/acceptInterest'));
 
 const getRoomId = (firstUserId, secondUserId) => [String(firstUserId), String(secondUserId)].sort().join(':');
 
-const areMutualLikes = async (firstUserId, secondUserId) => {
-    const users = await User.find({ _id: { $in: [firstUserId, secondUserId] } }).select('likes');
+const canChat = async (firstUserId, secondUserId) => {
+    const users = await User.find({ _id: { $in: [firstUserId, secondUserId] } }).select('likes acceptedChats');
     if (users.length !== 2) return false;
 
     const firstUser = users.find((user) => String(user._id) === String(firstUserId));
     const secondUser = users.find((user) => String(user._id) === String(secondUserId));
-    return firstUser.likes.some((id) => String(id) === String(secondUserId)) &&
+    const firstAccepted = (firstUser.acceptedChats || []).some((id) => String(id) === String(secondUserId));
+    const secondAccepted = (secondUser.acceptedChats || []).some((id) => String(id) === String(firstUserId));
+    const mutualLike = firstUser.likes.some((id) => String(id) === String(secondUserId)) &&
         secondUser.likes.some((id) => String(id) === String(firstUserId));
+
+    return firstAccepted || secondAccepted || mutualLike;
 };
 
 io.use((socket, next) => {
@@ -95,8 +99,8 @@ io.use((socket, next) => {
 io.on('connection', (socket) => {
     socket.on('join-chat', async (otherUserId, callback) => {
         const roomId = getRoomId(socket.user.id, otherUserId);
-        const allowed = await areMutualLikes(socket.user.id, otherUserId);
-        if (!allowed) return callback?.({ success: false, message: 'Chat is available only after mutual interest' });
+        const allowed = await canChat(socket.user.id, otherUserId);
+        if (!allowed) return callback?.({ success: false, message: 'Chat is available after acceptance' });
         socket.join(roomId);
         const history = await Message.find({ roomId }).sort({ createdAt: 1 }).limit(200).lean();
         return callback?.({
@@ -112,7 +116,7 @@ io.on('connection', (socket) => {
 
     socket.on('send-message', async ({ otherUserId, text }, callback) => {
         const message = String(text || '').trim();
-        if (!message || message.length > 1000 || !(await areMutualLikes(socket.user.id, otherUserId))) {
+        if (!message || message.length > 1000 || !(await canChat(socket.user.id, otherUserId))) {
             return callback?.({ success: false, message: 'Message not allowed' });
         }
 

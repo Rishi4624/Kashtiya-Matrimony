@@ -29,11 +29,12 @@ const login = async (req, res) => {
             expiresIn: "1d"
         }
         );
+        const isProduction = process.env.NODE_ENV === 'production';
         res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "none",
-            path: "/api",
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            path: "/",
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
         return res.status(200).json({ message: 'Login successful', success: true, user });
