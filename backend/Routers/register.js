@@ -6,7 +6,7 @@ dotenv.config();
 
 const register =  async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, gender, religion } = req.body;
         // Here you can add logic to save the user data to your database
         let flag = await User.findOne({ email }); // Replace with your actual database query
         if (flag) {
@@ -18,7 +18,9 @@ const register =  async (req, res) => {
             password: req.body.password,
             age: req.body.age,
             hobbies: req.body.hobbies,
-            interests: req.body.interests
+            interests: req.body.interests,
+            gender,
+            religion
         });
 
         const savedUser = await user.save();

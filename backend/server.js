@@ -134,6 +134,20 @@ io.on('connection', (socket) => {
         io.to(getRoomId(socket.user.id, otherUserId)).emit('new-message', payload);
         return callback?.({ success: true });
     });
+
+    socket.on('delete-chat', async (otherUserId, callback) => {
+        try {
+            const allowed = await canChat(socket.user.id, otherUserId);
+            if (!allowed) return callback?.({ success: false, message: 'Chat access denied' });
+
+            const roomId = getRoomId(socket.user.id, otherUserId);
+            await Message.deleteMany({ roomId });
+            io.to(roomId).emit('chat-deleted');
+            return callback?.({ success: true });
+        } catch (error) {
+            return callback?.({ success: false, message: 'Unable to delete chat' });
+        }
+    });
 });
 
 

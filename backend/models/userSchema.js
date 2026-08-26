@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
   },
 
   age: {
-    type: Number
+    type: Number,
+    min: 18,
+    max: 100
   },
   hobbies: {
     type: [String]
@@ -38,6 +40,36 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String
   },
+  gender: {
+    enum: ['male', 'female', 'other'],
+    type: String
+  },
+  religion: {
+    type: String,
+    enum: ['Hinduism', 'Christianity', 'Islam', 'Buddhism', 'Jainism', 'Sikhism', 'other']
+  },
+  maritalStatus: {
+    type: String,
+    enum: ['Never married', 'Divorced', 'Widowed', 'Separated']
+  },
+  motherTongue: { type: String },
+  education: { type: String },
+  occupation: { type: String },
+  income: { type: String },
+  height: { type: String },
+  diet: {
+    type: String,
+    enum: ['Vegetarian', 'Non-vegetarian', 'Eggetarian', 'Vegan', 'Other']
+  },
+  smoking: {
+    type: String,
+    enum: ['Never', 'Occasionally', 'Regularly']
+  },
+  drinking: {
+    type: String,
+    enum: ['Never', 'Occasionally', 'Regularly']
+  },
+  familyDetails: { type: String },
   posts: {
     type: [String]
   },
