@@ -6,6 +6,14 @@ import getProfiles from '../api/getProfiles.js'
 export default function Home() {
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
+  const [filters, setFilters] = useState({
+    gender: '',
+    minAge: '',
+    maxAge: '',
+    religion: '',
+    motherTongue: '',
+  })
+  const [appliedFilters, setAppliedFilters] = useState(filters)
  
   useEffect(() => {
     const loadProfiles = async () => {
@@ -14,6 +22,33 @@ export default function Home() {
     }
     loadProfiles()
   }, [])
+
+  const updateFilter = (event) => {
+    const { name, value } = event.target
+    setFilters((current) => ({ ...current, [name]: value }))
+  }
+
+  const applyFilters = (event) => {
+    event.preventDefault()
+    setAppliedFilters(filters)
+  }
+
+  const clearFilters = () => {
+    const emptyFilters = { gender: '', minAge: '', maxAge: '', religion: '', motherTongue: '' }
+    setFilters(emptyFilters)
+    setAppliedFilters(emptyFilters)
+  }
+
+  const filteredUsers = users.filter((user) => {
+    const age = Number(user.age)
+    const matchesGender = !appliedFilters.gender || user.gender === appliedFilters.gender
+    const matchesMinAge = !appliedFilters.minAge || (age > 0 && age >= Number(appliedFilters.minAge))
+    const matchesMaxAge = !appliedFilters.maxAge || (age > 0 && age <= Number(appliedFilters.maxAge))
+    const matchesReligion = !appliedFilters.religion || user.religion === appliedFilters.religion
+    const matchesMotherTongue = !appliedFilters.motherTongue || user.motherTongue?.toLowerCase() === appliedFilters.motherTongue.toLowerCase()
+
+    return matchesGender && matchesMinAge && matchesMaxAge && matchesReligion && matchesMotherTongue
+  })
  
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800 antialiased">
@@ -35,46 +70,48 @@ export default function Home() {
           </div>
  
           {/* Search Card */}
-          <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-5 sm:p-6">
+          <form onSubmit={applyFilters} className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-5 sm:p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">I'm looking for</label>
-                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none">
-                  <option>Bride</option>
-                  <option>Groom</option>
+                <select name="gender" value={filters.gender} onChange={updateFilter} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none">
+                  <option value="">Any</option>
+                  <option value="female">Bride</option>
+                  <option value="male">Groom</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Age</label>
                 <div className="flex gap-2">
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
-                    <option>21</option>
-                    <option>25</option>
-                    <option>30</option>
+                  <select name="minAge" value={filters.minAge} onChange={updateFilter} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    <option value="">Min</option>
+                    {[18, 21, 25, 30, 35, 40, 45, 50].map((age) => <option key={age} value={age}>{age}</option>)}
                   </select>
                   <span className="self-center text-gray-400">to</span>
-                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
-                    <option>28</option>
-                    <option>32</option>
-                    <option>35</option>
+                  <select name="maxAge" value={filters.maxAge} onChange={updateFilter} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    <option value="">Max</option>
+                    {[25, 30, 35, 40, 45, 50, 60, 70].map((age) => <option key={age} value={age}>{age}</option>)}
                   </select>
                 </div>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Religion</label>
-                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
-                  <option>Any</option>
-                  <option>Hindu</option>
-                  <option>Muslim</option>
-                  <option>Christian</option>
-                  <option>Sikh</option>
-                  <option>Other</option>
+                <select name="religion" value={filters.religion} onChange={updateFilter} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                  <option value="">Any</option>
+                  <option>Hinduism</option>
+                  <option>Islam</option>
+                  <option>Christianity</option>
+                  <option>Sikhism</option>
+                  <option>Buddhism</option>
+                  <option>Jainism</option>
+                  <option>other</option>
                 </select>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-500 mb-1">Mother Tongue</label>
-                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
-                  <option>Any</option>
+                <select name="motherTongue" value={filters.motherTongue} onChange={updateFilter} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                  <option value="">Any</option>
                   <option>Hindi</option>
                   <option>English</option>
                   <option>Marathi</option>
@@ -83,15 +120,18 @@ export default function Home() {
                 </select>
               </div>
             </div>
-            <div className="mt-5 flex justify-center">
-              <button className="w-full sm:w-auto px-10 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition flex items-center justify-center gap-2">
+            <div className="mt-5 flex flex-col sm:flex-row justify-center gap-3">
+              <button type="submit" className="w-full sm:w-auto px-10 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition flex items-center justify-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 Search Matches
               </button>
+              <button type="button" onClick={clearFilters} className="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-600 hover:bg-gray-50 font-semibold rounded-lg transition">
+                Clear
+              </button>
             </div>
-          </div>
+          </form>
  
           {/* Trust badges */}
           <div className="mt-8 flex flex-wrap justify-center gap-6 sm:gap-10 text-sm text-gray-600">
@@ -122,7 +162,7 @@ export default function Home() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Featured Profiles</h2>
-            <p className="text-gray-500 text-sm mt-1">Discover verified members looking for a life partner</p>
+            <p className="text-gray-500 text-sm mt-1">Showing {filteredUsers.length} of {users.length} profiles</p>
           </div>
           <a href="#" className="text-rose-600 hover:text-rose-700 text-sm font-medium hidden sm:block">
             View All →
@@ -133,9 +173,13 @@ export default function Home() {
           <div className="text-center py-16 text-gray-500">
             Loading profiles...
           </div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="text-center py-16 text-gray-500">
+            No profiles match your search.
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {users.map((user, index) => (
+            {filteredUsers.map((user, index) => (
               <UserCard
                 key={user.id || user._id || `profile-${index}`}
                 user={user}
