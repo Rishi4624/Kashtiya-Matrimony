@@ -19,7 +19,7 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
  
   return (
     <article
-      className="group relative bg-white rounded-xl border border-gray-200
+      className="group relative flex h-full flex-col bg-white rounded-xl border border-gray-200
                  overflow-hidden shadow-sm
                  transition-all duration-300 ease-out
                  hover:-translate-y-1 hover:shadow-lg hover:border-rose-200
@@ -29,7 +29,7 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
       {/* Clickable card area */}
       <button
         onClick={onClick}
-        className="w-full text-left focus:outline-none focus-visible:ring-2
+        className="flex w-full flex-1 flex-col text-left focus:outline-none focus-visible:ring-2
                    focus-visible:ring-rose-500 focus-visible:ring-offset-2"
       >
         {/* Portrait */}
@@ -134,7 +134,7 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
       </button>
  
       {/* Show Interest CTA */}
-      <div className="px-4 pb-4 pt-0">
+      <div className="px-4 pb-4 pt-0 ">
         <button
           onClick={handleInterest}
           className="w-full py-2.5 rounded-lg font-semibold text-white text-sm

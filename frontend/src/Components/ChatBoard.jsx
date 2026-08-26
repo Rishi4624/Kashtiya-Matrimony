@@ -57,27 +57,91 @@ export default function ChatBoard() {
   const avatar = otherUser?.avatar || otherUser?.image || otherUser?.profilePic
 
   return (
-    <main className="min-h-[calc(100vh-65px)] bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] px-4 py-8 text-white">
-      <section className="mx-auto flex h-[calc(100vh-130px)] max-w-2xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 shadow-2xl backdrop-blur-xl">
-        <header className="flex items-center gap-3 border-b border-white/10 p-4">
-          <button type="button" onClick={() => navigate('/user')} className="text-slate-400 hover:text-white" aria-label="Back to profile">←</button>
-          <img src={avatar || 'https://via.placeholder.com/64'} alt={title} className="h-11 w-11 rounded-full object-cover" />
-          <div>
-            <h1 className="font-semibold">{title}</h1>
-            <p className="text-xs text-slate-400">{status}</p>
+    <main className="min-h-[calc(100vh-65px)] bg-[#FFF8F9] px-3 py-6 sm:px-4">
+      <section className="mx-auto flex h-[calc(100vh-120px)] max-w-2xl flex-col overflow-hidden rounded-2xl border border-[#F3D9DF] bg-white shadow-lg shadow-rose-100/50">
+        
+        {/* Header */}
+        <header className="flex items-center gap-3 border-b border-[#F3D9DF] bg-white px-4 py-3.5">
+          <button
+            type="button"
+            onClick={() => navigate('/user')}
+            className="flex h-9 w-9 items-center justify-center rounded-full text-[#6B7280] transition hover:bg-[#FFF1F4] hover:text-[#E11D48]"
+            aria-label="Back"
+          >
+            ←
+          </button>
+
+          <img
+            src={avatar || 'https://via.placeholder.com/64'}
+            alt={title}
+            className="h-11 w-11 rounded-full object-cover ring-2 ring-[#FCE7EB]"
+          />
+
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-[15px] font-semibold text-[#1F2937]">
+              {title}
+            </h1>
+            <p className={`text-xs ${status === 'Connected' ? 'text-emerald-600' : 'text-[#9CA3AF]'}`}>
+              {status}
+            </p>
           </div>
         </header>
 
-        <div className="flex-1 space-y-3 overflow-y-auto p-4">
-          {messages.length === 0 && status === 'Connected' && <p className="pt-16 text-center text-sm text-slate-500">Start your conversation</p>}
+        {/* Messages */}
+        <div className="flex-1 space-y-3 overflow-y-auto bg-[#FFF8F9] px-4 py-5">
+          {messages.length === 0 && status === 'Connected' && (
+            <div className="flex h-full flex-col items-center justify-center pt-10 text-center">
+              <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-[#FCE7EB]">
+                <span className="text-2xl">💬</span>
+              </div>
+              <p className="text-sm font-medium text-[#4B5563]">Start your conversation</p>
+              <p className="mt-1 text-xs text-[#9CA3AF]">Say hello to your match</p>
+            </div>
+          )}
+
           {messages.map((message, index) => {
             const mine = message.senderId === String(user?._id || user?.id)
-            return <div key={`${message.createdAt}-${index}`} className={`flex ${mine ? 'justify-end' : 'justify-start'}`}><p className={`max-w-[80%] rounded-2xl px-4 py-2 text-sm ${mine ? 'bg-violet-500 text-white' : 'bg-white/10 text-slate-200'}`}>{message.text}</p></div>
+            return (
+              <div
+                key={`${message.createdAt}-${index}`}
+                className={`flex ${mine ? 'justify-end' : 'justify-start'}`}
+              >
+                <p
+                  className={`max-w-[78%] rounded-2xl px-4 py-2.5 text-[14px] leading-relaxed shadow-sm ${
+                    mine
+                      ? 'rounded-br-md bg-[#E11D48] text-white'
+                      : 'rounded-bl-md border border-[#F3D9DF] bg-white text-[#1F2937]'
+                  }`}
+                >
+                  {message.text}
+                </p>
+              </div>
+            )
           })}
           <div ref={bottomRef} />
         </div>
 
-        {status === 'Connected' && <form onSubmit={sendMessage} className="flex gap-2 border-t border-white/10 p-4"><input value={text} onChange={(event) => setText(event.target.value)} maxLength={1000} placeholder="Write a message..." className="min-w-0 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-violet-400" /><button type="submit" className="rounded-xl bg-violet-500 px-5 text-sm font-semibold hover:bg-violet-400">Send</button></form>}
+        {/* Input */}
+        {status === 'Connected' && (
+          <form
+            onSubmit={sendMessage}
+            className="flex items-center gap-2 border-t border-[#F3D9DF] bg-white px-3 py-3"
+          >
+            <input
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              maxLength={1000}
+              placeholder="Write a message..."
+              className="min-w-0 flex-1 rounded-full border border-[#E5E7EB] bg-[#FFF8F9] px-4 py-2.5 text-sm text-[#1F2937] outline-none transition placeholder:text-[#9CA3AF] focus:border-[#E11D48] focus:ring-2 focus:ring-[#FCE7EB]"
+            />
+            <button
+              type="submit"
+              className="flex h-11 items-center justify-center rounded-full bg-[#E11D48] px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#C9183B] active:scale-95"
+            >
+              Send
+            </button>
+          </form>
+        )}
       </section>
     </main>
   )

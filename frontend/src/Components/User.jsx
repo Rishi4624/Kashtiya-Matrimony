@@ -186,6 +186,13 @@ export default function User() {
     return (likedUser.likes || []).some((likeId) => String(likeId?._id || likeId) === currentUserId)
   }
 
+  const hasChatAccess = (likedUser) => {
+    const likedUserId = String(likedUser?._id || likedUser?.id)
+    return (user.acceptedChats || []).some(
+      (acceptedUser) => String(acceptedUser?._id || acceptedUser) === likedUserId,
+    ) || isMutualLike(likedUser)
+  }
+
   const handleAcceptInterest = async (likedUser) => {
     const likedUserId = likedUser?._id || likedUser?.id
     if (!likedUserId) return
@@ -198,10 +205,9 @@ export default function User() {
       return
     }
 
-    const acceptedUser = { ...likedUser, likes: [...(likedUser.likes || []), user._id || user.id] }
     setUser((currentUser) => ({
       ...currentUser,
-      likes: [...(currentUser.likes || []).filter((item) => String(item?._id || item) !== String(likedUserId)), acceptedUser],
+      acceptedChats: [...(currentUser.acceptedChats || []), likedUser],
     }))
   }
 
@@ -609,7 +615,7 @@ export default function User() {
                           <span className="block text-xs text-gray-400">{likedUser.age} yrs</span>
                         )}
                       </span>
-                      {isMutualLike(likedUser) ? (
+                      {hasChatAccess(likedUser) ? (
                         <button
                           type="button"
                           onClick={() => navigate(`/chat/${likedUserId}`, { state: { user: likedUser } })}
