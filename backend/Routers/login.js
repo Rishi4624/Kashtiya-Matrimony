@@ -37,7 +37,11 @@ const login = async (req, res) => {
             path: "/",
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
-        return res.status(200).json({ message: 'Login successful', success: true, user });
+        const authenticatedUser = await User.findById(user._id)
+            .select('-password')
+            .populate('likes', '-password')
+            .populate('acceptedChats', '-password');
+        return res.status(200).json({ message: 'Login successful', success: true, user: authenticatedUser });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
