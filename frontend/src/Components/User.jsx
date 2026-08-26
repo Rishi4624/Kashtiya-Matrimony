@@ -41,12 +41,12 @@ export default function User() {
 
   if (!user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <p className="text-slate-400 text-lg mb-4">Please log in to view your profile</p>
+          <p className="text-gray-500 text-lg mb-4">Please log in to view your profile</p>
           <button
             onClick={() => navigate('/login')}
-            className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-violet-500 to-pink-500 hover:from-violet-600 hover:to-pink-600 transition"
+            className="px-6 py-2.5 rounded-lg text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 transition"
           >
             Go to Login
           </button>
@@ -211,17 +211,12 @@ export default function User() {
   const currentItems = activeTab === 'posts' ? displayPosts : displayLikes
 
   return (
-    <div className="min-h-screen font-sans text-white antialiased relative overflow-hidden">
-      {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] -z-20" />
-      <div className="fixed top-[-120px] left-[-80px] w-96 h-96 bg-violet-700/30 rounded-full blur-[100px] -z-10" />
-      <div className="fixed bottom-[-100px] right-[-60px] w-80 h-80 bg-pink-600/25 rounded-full blur-[100px] -z-10" />
-
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <div className="min-h-screen bg-gray-50 font-sans text-gray-800 antialiased">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-sm text-slate-400 hover:text-violet-300 transition mb-6"
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-rose-600 transition mb-6"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -229,18 +224,16 @@ export default function User() {
           Back
         </button>
 
-        {/* ========== TOP: PROFILE INFO ========== */}
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 mb-8 shadow-2xl">
+        {/* ========== TOP: PROFILE CARD ========== */}
+        <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 mb-8 shadow-sm">
           {/* Edit / Save Buttons */}
           <div className="flex justify-end mb-6">
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm
-                           bg-gradient-to-r from-violet-500 to-pink-500 
-                           hover:from-violet-600 hover:to-pink-600 
-                           hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/40
-                           active:translate-y-0 transition-all duration-300"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm
+                           text-white bg-rose-600 hover:bg-rose-700
+                           shadow-sm hover:shadow transition-all duration-200"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -251,19 +244,17 @@ export default function User() {
               <div className="flex gap-3">
                 <button
                   onClick={handleCancel}
-                  className="px-5 py-2.5 rounded-xl font-semibold text-sm
-                             bg-white/10 border border-white/15 text-slate-300
-                             hover:bg-white/15 transition-all duration-300"
+                  className="px-5 py-2.5 rounded-lg font-semibold text-sm
+                             bg-white border border-gray-300 text-gray-700
+                             hover:bg-gray-50 transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSave}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm
-                             bg-gradient-to-r from-violet-500 to-pink-500 
-                             hover:from-violet-600 hover:to-pink-600 
-                             hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/40
-                             active:translate-y-0 transition-all duration-300"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm
+                             text-white bg-rose-600 hover:bg-rose-700
+                             shadow-sm hover:shadow transition-all duration-200"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -281,18 +272,18 @@ export default function User() {
               <img
                 src={displayAvatar || 'https://via.placeholder.com/150'}
                 alt={user.name}
-                className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-violet-500/30 shadow-xl shadow-violet-500/20"
+                className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-rose-100 shadow-md"
               />
               {isEditing && (
                 <button
                   onClick={() => avatarInputRef.current?.click()}
                   className="absolute bottom-1 right-1 w-10 h-10 rounded-full 
-                             bg-gradient-to-br from-violet-500 to-pink-500 
+                             bg-rose-600 text-white
                              flex items-center justify-center shadow-lg
-                             hover:scale-110 transition-transform duration-300"
+                             hover:bg-rose-700 hover:scale-105 transition-all duration-200"
                   title="Upload profile picture"
                 >
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
@@ -311,8 +302,8 @@ export default function User() {
             <div className="flex-1 text-center sm:text-left w-full">
               {!isEditing ? (
                 <>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-1">{user.name}</h1>
-                  <p className="text-violet-300 text-sm mb-3 flex items-center justify-center sm:justify-start gap-1.5">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{user.name}</h1>
+                  <p className="text-rose-600 text-sm mb-4 flex items-center justify-center sm:justify-start gap-1.5">
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
@@ -321,28 +312,28 @@ export default function User() {
 
                   <div className="flex justify-center sm:justify-start gap-8 mb-4">
                     <div className="text-center">
-                      <p className="text-xl font-bold text-white">{displayPosts.length}</p>
-                      <p className="text-xs text-slate-400">Posts</p>
+                      <p className="text-xl font-bold text-gray-900">{displayPosts.length}</p>
+                      <p className="text-xs text-gray-500">Posts</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold text-white">{(user.hobbies || []).length}</p>
-                      <p className="text-xs text-slate-400">Hobbies</p>
+                      <p className="text-xl font-bold text-gray-900">{(user.hobbies || []).length}</p>
+                      <p className="text-xs text-gray-500">Hobbies</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-xl font-bold text-white">{(user.interests || []).length}</p>
-                      <p className="text-xs text-slate-400">Interests</p>
+                      <p className="text-xl font-bold text-gray-900">{(user.interests || []).length}</p>
+                      <p className="text-xs text-gray-500">Interests</p>
                     </div>
                   </div>
 
-                  <p className="text-slate-300 text-sm leading-relaxed mb-4 max-w-lg">
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4 max-w-lg">
                     {user.bio || 'No bio yet.'}
                   </p>
 
                   {(user.email || user.phone) && (
-                    <div className="flex flex-wrap justify-center sm:justify-start gap-4 text-sm text-slate-400 mb-4">
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-4 text-sm text-gray-500 mb-4">
                       {user.email && (
                         <span className="flex items-center gap-1.5">
-                          <svg className="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                           </svg>
                           {user.email}
@@ -350,7 +341,7 @@ export default function User() {
                       )}
                       {user.phone && (
                         <span className="flex items-center gap-1.5">
-                          <svg className="w-4 h-4 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                           </svg>
                           {user.phone}
@@ -361,12 +352,12 @@ export default function User() {
 
                   <div className="flex flex-wrap justify-center sm:justify-start gap-2">
                     {(user.hobbies || []).map((h) => (
-                      <span key={h} className="px-3 py-1 text-xs font-medium rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/25">
+                      <span key={h} className="px-3 py-1 text-xs font-medium rounded-full bg-rose-50 text-rose-700 border border-rose-100">
                         {h}
                       </span>
                     ))}
                     {(user.interests || []).map((i) => (
-                      <span key={i} className="px-3 py-1 text-xs font-medium rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/25">
+                      <span key={i} className="px-3 py-1 text-xs font-medium rounded-full bg-pink-50 text-pink-700 border border-pink-100">
                         {i}
                       </span>
                     ))}
@@ -376,81 +367,87 @@ export default function User() {
                 /* ========== EDIT FORM ========== */
                 <div className="space-y-4 text-left">
                   <div>
-                    <label className="block text-sm font-medium text-violet-200 mb-1">Full Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name || ''}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                      className="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 
+                                 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-violet-200 mb-1">Age</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
                       <input
                         type="number"
                         name="age"
                         value={formData.age || ''}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                        className="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-violet-200 mb-1">Location</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
                       <input
                         type="text"
                         name="location"
                         value={formData.location || ''}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                        className="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-violet-200 mb-1">Email</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
                       <input
                         type="email"
                         name="email"
                         value={formData.email || ''}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                        className="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-violet-200 mb-1">Phone</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
                       <input
                         type="text"
                         name="phone"
                         value={formData.phone || ''}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                        className="w-full px-4 py-2.5 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-violet-200 mb-1">Bio</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
                     <textarea
                       name="bio"
                       value={formData.bio || ''}
                       onChange={handleChange}
                       rows={3}
-                      className="w-full px-4 py-2.5 rounded-xl text-white text-sm resize-none bg-white/5 border border-white/10 focus:bg-white/10 focus:border-violet-400/60 focus:ring-2 focus:ring-violet-500/30 focus:outline-none transition"
+                      className="w-full px-4 py-2.5 rounded-lg text-sm resize-none border border-gray-300 
+                                 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none transition"
                     />
                   </div>
 
                   {/* Hobbies */}
                   <div>
-                    <label className="block text-sm font-medium text-violet-200 mb-1">Hobbies</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Hobbies</label>
                     <div className="flex flex-wrap gap-2 mb-2">
                       {(formData.hobbies || []).map((h) => (
-                        <span key={h} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full bg-violet-500/15 text-violet-300 border border-violet-500/25">
+                        <span key={h} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full bg-rose-50 text-rose-700 border border-rose-100">
                           {h}
-                          <button type="button" onClick={() => removeHobby(h)} className="hover:text-white">
+                          <button type="button" onClick={() => removeHobby(h)} className="hover:text-rose-900">
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -465,12 +462,13 @@ export default function User() {
                         onChange={(e) => setHobbyInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addHobby())}
                         placeholder="Add hobby..."
-                        className="flex-1 px-3 py-2 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:border-violet-400/60 focus:outline-none"
+                        className="flex-1 px-3 py-2 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:outline-none"
                       />
                       <button
                         type="button"
                         onClick={addHobby}
-                        className="px-3 py-2 rounded-xl bg-violet-500/20 text-violet-300 text-sm border border-violet-500/30 hover:bg-violet-500/30"
+                        className="px-3 py-2 rounded-lg bg-rose-50 text-rose-700 text-sm border border-rose-200 hover:bg-rose-100"
                       >
                         Add
                       </button>
@@ -479,12 +477,12 @@ export default function User() {
 
                   {/* Interests */}
                   <div>
-                    <label className="block text-sm font-medium text-violet-200 mb-1">Interests</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Interests</label>
                     <div className="flex flex-wrap gap-2 mb-2">
                       {(formData.interests || []).map((i) => (
-                        <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/25">
+                        <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 text-xs rounded-full bg-pink-50 text-pink-700 border border-pink-100">
                           {i}
-                          <button type="button" onClick={() => removeInterest(i)} className="hover:text-white">
+                          <button type="button" onClick={() => removeInterest(i)} className="hover:text-pink-900">
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                             </svg>
@@ -499,12 +497,13 @@ export default function User() {
                         onChange={(e) => setInterestInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addInterest())}
                         placeholder="Add interest..."
-                        className="flex-1 px-3 py-2 rounded-xl text-white text-sm bg-white/5 border border-white/10 focus:border-violet-400/60 focus:outline-none"
+                        className="flex-1 px-3 py-2 rounded-lg text-sm border border-gray-300 
+                                   focus:border-rose-400 focus:outline-none"
                       />
                       <button
                         type="button"
                         onClick={addInterest}
-                        className="px-3 py-2 rounded-xl bg-pink-500/15 text-pink-300 text-sm border border-pink-500/30 hover:bg-pink-500/25"
+                        className="px-3 py-2 rounded-lg bg-pink-50 text-pink-700 text-sm border border-pink-200 hover:bg-pink-100"
                       >
                         Add
                       </button>
@@ -516,15 +515,13 @@ export default function User() {
           </div>
         </div>
 
-        {/* ========== BOTTOM: POSTS / LIKES GALLERY ========== */}
+        {/* ========== BOTTOM: POSTS / LIKES ========== */}
         <div>
-          {/* Sliding Tabs + Add Photos */}
+          {/* Tabs + Add Photos */}
           <div className="flex items-center justify-between mb-5">
-            {/* Sliding Segmented Control */}
-            <div className="relative flex bg-white/5 border border-white/10 rounded-xl p-1">
-              {/* Sliding indicator */}
+            <div className="relative flex bg-white border border-gray-200 rounded-xl p-1 shadow-sm">
               <div
-                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-lg bg-violet-500/20 border border-violet-500/40 transition-all duration-300 ease-out ${
+                className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-lg bg-rose-50 border border-rose-200 transition-all duration-300 ease-out ${
                   activeTab === 'posts' ? 'left-1' : 'left-[calc(50%+2px)]'
                 }`}
               />
@@ -532,16 +529,11 @@ export default function User() {
               <button
                 onClick={() => setActiveTab('posts')}
                 className={`relative z-10 flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
-                  activeTab === 'posts' ? 'text-violet-200' : 'text-slate-400 hover:text-slate-300'
+                  activeTab === 'posts' ? 'text-rose-700' : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 Posts
                 <span className="text-xs opacity-70">({displayPosts.length})</span>
@@ -550,29 +542,23 @@ export default function User() {
               <button
                 onClick={() => setActiveTab('likes')}
                 className={`relative z-10 flex items-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-colors duration-300 ${
-                  activeTab === 'likes' ? 'text-violet-200' : 'text-slate-400 hover:text-slate-300'
+                  activeTab === 'likes' ? 'text-rose-700' : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                Likes
+                Interests
                 <span className="text-xs opacity-70">({displayLikes.length})</span>
               </button>
             </div>
 
-            {/* Add Photos (only on Posts tab + editing) */}
             {isEditing && activeTab === 'posts' && (
               <button
                 onClick={() => postsInputRef.current?.click()}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium
-                           bg-white/10 border border-white/15 text-violet-200
-                           hover:bg-white/15 hover:border-violet-500/40 transition-all duration-300"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
+                           bg-white border border-gray-300 text-gray-700
+                           hover:border-rose-300 hover:text-rose-600 transition-all duration-200"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
@@ -591,7 +577,7 @@ export default function User() {
             />
           </div>
 
-          {/* Grid */}
+          {/* Content */}
           {activeTab === 'likes' ? (
             displayLikes.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -604,35 +590,49 @@ export default function User() {
                   return (
                     <div
                       key={likedUserId || index}
-                      className="flex items-center gap-3 p-3 text-left bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-violet-400/40 transition-all duration-300"
+                      className="flex items-center gap-3 p-3 bg-white border border-gray-200 rounded-xl 
+                                 hover:border-rose-200 hover:shadow-sm transition-all duration-200"
                     >
                       <img
                         src={likedUserAvatar || 'https://via.placeholder.com/96'}
                         alt={likedUserName}
-                        className="w-14 h-14 rounded-full object-cover border-2 border-violet-500/30"
+                        className="w-14 h-14 rounded-full object-cover border-2 border-rose-100"
                       />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-semibold text-white">
+                        <span className="block truncate text-sm font-semibold text-gray-900">
                           {likedUserName}
                         </span>
-                        <span className="block truncate text-xs text-violet-200/80">
+                        <span className="block truncate text-xs text-gray-500">
                           {likedUserLocation}
                         </span>
                         {likedUser?.age && (
-                          <span className="block text-xs text-slate-400">{likedUser.age} yrs</span>
+                          <span className="block text-xs text-gray-400">{likedUser.age} yrs</span>
                         )}
                       </span>
                       {isMutualLike(likedUser) ? (
-                        <button type="button" onClick={() => navigate(`/chat/${likedUserId}`, { state: { user: likedUser } })} className="shrink-0 rounded-lg bg-violet-500 px-3 py-2 text-xs font-semibold text-white hover:bg-violet-400">Open chat</button>
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/chat/${likedUserId}`, { state: { user: likedUser } })}
+                          className="shrink-0 rounded-lg bg-rose-600 px-3 py-2 text-xs font-semibold text-white hover:bg-rose-700"
+                        >
+                          Open chat
+                        </button>
                       ) : (
-                        <button type="button" disabled={acceptingUserId === likedUserId} onClick={() => handleAcceptInterest(likedUser)} className="shrink-0 rounded-lg bg-pink-500 px-3 py-2 text-xs font-semibold text-white hover:bg-pink-400 disabled:cursor-wait disabled:opacity-60">{acceptingUserId === likedUserId ? 'Accepting...' : 'Accept'}</button>
+                        <button
+                          type="button"
+                          disabled={acceptingUserId === likedUserId}
+                          onClick={() => handleAcceptInterest(likedUser)}
+                          className="shrink-0 rounded-lg bg-rose-500 px-3 py-2 text-xs font-semibold text-white hover:bg-rose-600 disabled:cursor-wait disabled:opacity-60"
+                        >
+                          {acceptingUserId === likedUserId ? 'Accepting...' : 'Accept'}
+                        </button>
                       )}
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <div className="text-center py-16 text-slate-500">
+              <div className="text-center py-16 text-gray-400 bg-white border border-gray-200 rounded-xl">
                 <svg className="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
@@ -640,30 +640,25 @@ export default function User() {
               </div>
             )
           ) : currentItems.length > 0 ? (
-            <div className="grid grid-cols-3 gap-1 sm:gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
               {currentItems.map((item, index) => (
                 <div
                   key={index}
-                  className="relative aspect-square overflow-hidden rounded-lg sm:rounded-xl group cursor-pointer"
+                  className="relative aspect-square overflow-hidden rounded-xl border border-gray-200 group cursor-pointer bg-white"
                 >
                   <img
                     src={item}
-                    alt={`${activeTab === 'posts' ? 'Post' : 'Like'} ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    alt={`Post ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     {isEditing && activeTab === 'posts' && (
                       <button
                         onClick={() => removePost(index)}
-                        className="w-9 h-9 rounded-full bg-red-500/90 flex items-center justify-center hover:bg-red-600 transition shadow-lg"
+                        className="w-9 h-9 rounded-full bg-red-500 flex items-center justify-center hover:bg-red-600 transition shadow-lg"
                       >
                         <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                         </svg>
                       </button>
                     )}
@@ -672,22 +667,17 @@ export default function User() {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16 text-slate-500">
+            <div className="text-center py-16 text-gray-400 bg-white border border-gray-200 rounded-xl">
               <svg className="w-12 h-12 mx-auto mb-3 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
               <p className="text-sm">
-                {activeTab === 'posts' ? 'No posts yet' : 'No likes yet'}
+                {activeTab === 'posts' ? 'No posts yet' : 'No interests yet'}
               </p>
               {isEditing && activeTab === 'posts' && (
                 <button
                   onClick={() => postsInputRef.current?.click()}
-                  className="mt-3 text-violet-400 text-sm hover:text-violet-300 transition"
+                  className="mt-3 text-rose-600 text-sm hover:text-rose-700 font-medium transition"
                 >
                   Upload your first photo
                 </button>
@@ -699,3 +689,4 @@ export default function User() {
     </div>
   )
 }
+ 

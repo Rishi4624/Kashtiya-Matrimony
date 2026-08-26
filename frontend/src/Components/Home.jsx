@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import UserCard from './UserCard'
 import { useNavigate } from 'react-router-dom'
 import getProfiles from '../api/getProfiles.js'
-
+ 
 export default function Home() {
   const navigate = useNavigate()
   const [users, setUsers] = useState([])
-
+ 
   useEffect(() => {
     const loadProfiles = async () => {
       const profiles = await getProfiles()
@@ -14,200 +14,260 @@ export default function Home() {
     }
     loadProfiles()
   }, [])
-
+ 
   return (
-    <div className="min-h-screen font-sans text-white antialiased relative overflow-hidden">
-      {/* Dark Navy Background */}
-      <div className="fixed inset-0 bg-gradient-to-br from-[#0a0f1c] via-[#0f172a] to-[#111827] -z-20" />
-
-      {/* Soft Ambient Blobs (subtle & professional) */}
-      <div className="fixed top-[-100px] left-[-60px] w-80 h-80 bg-cyan-600/20 rounded-full blur-[120px] -z-10" />
-      <div className="fixed bottom-[-80px] right-[-40px] w-72 h-72 bg-indigo-600/15 rounded-full blur-[100px] -z-10" />
-      <div className="fixed top-1/3 right-1/4 w-64 h-64 bg-teal-600/10 rounded-full blur-[90px] -z-10" />
-
-      {/* Header */}
-      <header className="pt-16 pb-14 px-4 text-center relative z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 
-                       bg-gradient-to-r from-cyan-300 via-teal-300 to-indigo-300 
-                       bg-clip-text text-transparent">
-          Kashtiya Matrimony
-        </h1>
-        <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
-          Discover meaningful connections, shared passions, and real stories
-        </p>
-      </header>
-
-      {/* Cards Grid */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {users.map((user, index) => (
-            <UserCard
-              key={user.id || user._id || `profile-${index}`}
-              user={user}
-              delay={`${(index + 1) * 0.1}s`}
-              onClick={() =>
-                navigate(`/profile/${user.id || user._id}`, { state: { user } })
-              }
-            />
-          ))}
-        </div>
-      </main>
-
-      {/* ===================== FOOTER ===================== */}
-      <footer className="relative z-10 border-t border-white/10 bg-white/[0.03] backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
-
-          {/* Top Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-
-            {/* Brand */}
-            <div className="sm:col-span-2 lg:col-span-1">
-              <h3 className="text-xl font-bold bg-gradient-to-r from-cyan-300 to-indigo-300 
-                             bg-clip-text text-transparent mb-3">
-                Kashtiya Matrimony
-              </h3>
-              <p className="text-slate-400 text-sm leading-relaxed mb-5 max-w-xs">
-                Connecting hearts with trust, tradition, and meaningful relationships.
-              </p>
-
-              {/* Social Icons */}
-              <div className="flex gap-3">
-                {['twitter', 'github', 'instagram', 'linkedin'].map((platform, i) => (
-                  <a
-                    key={platform}
-                    href="#"
-                    className="w-9 h-9 rounded-full bg-white/5 border border-white/10 
-                               flex items-center justify-center text-slate-400 
-                               hover:bg-cyan-500/15 hover:text-cyan-300 hover:border-cyan-400/30 
-                               transition-all duration-300"
-                  >
-                    {/* Simple icons - replace with your preferred SVGs if needed */}
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                      {i === 0 && <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />}
-                      {i === 1 && <path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599-.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />}
-                      {i === 2 && <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />}
-                      {i === 3 && <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />}
-                    </svg>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Product */}
-            <div>
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                Product
-              </h4>
-              <ul className="space-y-3 text-sm">
-                {['Features', 'Pricing', 'Documentation', 'API Reference', 'Changelog'].map(
-                  (item) => (
-                    <li key={item}>
-                      <a
-                        href="#"
-                        className="text-slate-400 hover:text-cyan-300 transition-colors duration-200"
-                      >
-                        {item}
-                      </a>
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-
-            {/* Company */}
-            <div>
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                Company
-              </h4>
-              <ul className="space-y-3 text-sm">
-                {['About Us', 'Careers', 'Blog', 'Press Kit', 'Contact Us'].map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-slate-400 hover:text-cyan-300 transition-colors duration-200"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Legal */}
-            <div>
-              <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                Legal
-              </h4>
-              <ul className="space-y-3 text-sm">
-                {[
-                  'Terms & Conditions',
-                  'Privacy Policy',
-                  'Cookie Policy',
-                  'Security',
-                  'GDPR',
-                ].map((item) => (
-                  <li key={item}>
-                    <a
-                      href="#"
-                      className="text-slate-400 hover:text-cyan-300 transition-colors duration-200"
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Newsletter */}
-          <div className="border-t border-white/10 pt-8 mb-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-              <div>
-                <h4 className="text-sm font-semibold text-white mb-1">
-                  Subscribe to our newsletter
-                </h4>
-                <p className="text-slate-400 text-sm">
-                  Get updates on new matches and community stories.
-                </p>
-              </div>
-              <div className="flex w-full sm:w-auto gap-2">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 sm:w-64 px-4 py-2.5 rounded-xl text-sm text-white
-                             bg-white/5 border border-white/10 
-                             focus:bg-white/10 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-500/20 
-                             focus:outline-none transition placeholder-slate-500"
-                />
-                <button
-                  className="px-5 py-2.5 rounded-xl text-sm font-semibold text-white
-                             bg-gradient-to-r from-cyan-500 to-indigo-600 
-                             hover:from-cyan-400 hover:to-indigo-500 
-                             transition-all duration-300 whitespace-nowrap
-                             shadow-lg shadow-cyan-500/20"
-                >
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Bar */}
-          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-slate-500 text-sm">
-              © {new Date().getFullYear()} Kashtiya Matrimony. All rights reserved.
+    <div className="min-h-screen bg-white font-sans text-gray-800 antialiased">
+     
+ 
+      {/* ========== HERO + SEARCH ========== */}
+      <section className="bg-gradient-to-b from-rose-50 to-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+          <div className="text-center mb-8">
+            <p className="text-rose-600 font-semibold text-sm uppercase tracking-wider mb-2">
+              Trusted Matrimony Platform
             </p>
-            <div className="flex gap-6 text-sm">
-              {['Terms', 'Privacy', 'Cookies', 'Sitemap'].map((item) => (
-                <a
-                  key={item}
-                  href="#"
-                  className="text-slate-500 hover:text-cyan-300 transition-colors"
-                >
-                  {item}
-                </a>
-              ))}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3">
+              Find Your Perfect Life Partner
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              100% screened profiles • Verified members • Meaningful connections
+            </p>
+          </div>
+ 
+          {/* Search Card */}
+          <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 p-5 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">I'm looking for</label>
+                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 focus:border-rose-500 outline-none">
+                  <option>Bride</option>
+                  <option>Groom</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Age</label>
+                <div className="flex gap-2">
+                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    <option>21</option>
+                    <option>25</option>
+                    <option>30</option>
+                  </select>
+                  <span className="self-center text-gray-400">to</span>
+                  <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                    <option>28</option>
+                    <option>32</option>
+                    <option>35</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Religion</label>
+                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                  <option>Any</option>
+                  <option>Hindu</option>
+                  <option>Muslim</option>
+                  <option>Christian</option>
+                  <option>Sikh</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1">Mother Tongue</label>
+                <select className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-rose-500 outline-none">
+                  <option>Any</option>
+                  <option>Hindi</option>
+                  <option>English</option>
+                  <option>Marathi</option>
+                  <option>Bengali</option>
+                  <option>Tamil</option>
+                </select>
+              </div>
             </div>
+            <div className="mt-5 flex justify-center">
+              <button className="w-full sm:w-auto px-10 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-lg shadow-md transition flex items-center justify-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Search Matches
+              </button>
+            </div>
+          </div>
+ 
+          {/* Trust badges */}
+          <div className="mt-8 flex flex-wrap justify-center gap-6 sm:gap-10 text-sm text-gray-600">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                ✓
+              </span>
+              100% Screened Profiles
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                🔒
+              </span>
+              Privacy Protected
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center">
+                ♥
+              </span>
+              Genuine Intent for Marriage
+            </div>
+          </div>
+        </div>
+      </section>
+ 
+      {/* ========== PROFILES SECTION ========== */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Featured Profiles</h2>
+            <p className="text-gray-500 text-sm mt-1">Discover verified members looking for a life partner</p>
+          </div>
+          <a href="#" className="text-rose-600 hover:text-rose-700 text-sm font-medium hidden sm:block">
+            View All →
+          </a>
+        </div>
+ 
+        {users.length === 0 ? (
+          <div className="text-center py-16 text-gray-500">
+            Loading profiles...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {users.map((user, index) => (
+              <UserCard
+                key={user.id || user._id || `profile-${index}`}
+                user={user}
+                delay={`${(index + 1) * 0.05}s`}
+                onClick={() =>
+                  navigate(`/profile/${user.id || user._id}`, { state: { user } })
+                }
+              />
+            ))}
+          </div>
+        )}
+      </main>
+ 
+      {/* ========== WHY US / FEATURES ========== */}
+      <section className="bg-gray-50 border-y border-gray-200 py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-2xl font-bold text-center text-gray-900 mb-10">
+            Why Choose Kashtiya Matrimony?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Verified & Screened',
+                desc: 'Every profile goes through thorough screening so you meet genuine people serious about marriage.',
+                icon: '🛡️',
+              },
+              {
+                title: 'Advanced Matching',
+                desc: 'Filter by religion, caste, mother tongue, education, location and more to find compatible matches.',
+                icon: '🎯',
+              },
+              {
+                title: 'Safe & Private',
+                desc: 'You control who sees your photos and contact details. Your privacy is our priority.',
+                icon: '🔐',
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm text-center">
+                <div className="text-3xl mb-4">{item.icon}</div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+ 
+      {/* ========== SUCCESS STORIES ========== */}
+      <section className="py-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold text-gray-900">Happy Couples</h2>
+            <p className="text-gray-500 mt-1">Stories of successful matches made on Kashtiya</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { names: 'Rahul & Priya', date: 'Married Dec 2024', story: 'Found each other through shared values and family background.' },
+              { names: 'Amit & Sneha', date: 'Married Mar 2025', story: 'The perfect match in education, culture and life goals.' },
+              { names: 'Vikram & Ananya', date: 'Married Jan 2025', story: 'Connected over common interests and traditional values.' },
+            ].map((couple) => (
+              <div key={couple.names} className="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-bold">
+                    ♥
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">{couple.names}</p>
+                    <p className="text-xs text-gray-500">{couple.date}</p>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 italic">"{couple.story}"</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+ 
+      {/* ========== FOOTER ========== */}
+      <footer className="bg-gray-900 text-gray-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-rose-600 flex items-center justify-center text-white font-bold">
+                  K
+                </div>
+                <span className="text-white font-bold text-lg">Kashtiya Matrimony</span>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Helping people find meaningful life partners with trust, privacy and genuine intent for marriage.
+              </p>
+            </div>
+ 
+            <div>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Browse By</h4>
+              <ul className="space-y-2 text-sm">
+                {['Religion', 'Caste', 'Mother Tongue', 'City', 'Occupation', 'NRI'].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="hover:text-rose-400 transition">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+ 
+            <div>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+              <ul className="space-y-2 text-sm">
+                {['About Us', 'Contact', 'Careers', 'Success Stories', 'Blog'].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="hover:text-rose-400 transition">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+ 
+            <div>
+              <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Help & Legal</h4>
+              <ul className="space-y-2 text-sm">
+                {['Help Center', 'Terms of Use', 'Privacy Policy', 'Safety Tips', 'Report Abuse'].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="hover:text-rose-400 transition">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+ 
+          <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+            <p>© {new Date().getFullYear()} Kashtiya Matrimony. All rights reserved.</p>
+            <p className="text-center sm:text-right">
+              This platform is intended only for users with genuine intent for marriage.
+            </p>
           </div>
         </div>
       </footer>

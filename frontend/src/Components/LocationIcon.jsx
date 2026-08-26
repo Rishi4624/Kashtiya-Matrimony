@@ -1,5 +1,5 @@
 import React from 'react'
-
+ 
 export default function LocationIcon() {
   return (
     <svg className="w-4 h-4 text-violet-400" fill="currentColor" viewBox="0 0 20 20">
