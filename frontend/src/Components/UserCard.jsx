@@ -1,9 +1,10 @@
 import React from 'react'
 import LocationIcon from './LocationIcon'
 import { addInterest } from '../api/addInterest'
+import default_image from '../assets/default_image.webp'
  
 export default function UserCard({ user, delay = '0ms', onClick }) {
-  const defaultAvatar = '/default-avatar.svg'
+  const defaultAvatar = default_image;
   const hobbies = Array.isArray(user.hobbies) ? user.hobbies : []
   const interests = Array.isArray(user.interests) ? user.interests : []
  
