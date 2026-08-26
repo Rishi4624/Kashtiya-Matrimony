@@ -1,85 +1,82 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import logoutUser from '../api/logout.js';
-import { useAuth } from '../contex/AuthContex.jsx';
- 
+import { NavLink, useNavigate } from 'react-router-dom'
+import logoutUser from '../api/logout.js'
+import { useAuth } from '../contex/AuthContex.jsx'
+
 export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
- 
+  const navigate = useNavigate()
+  const { setUser } = useAuth()
+
   const handleLogout = async () => {
     try {
-      const response = await logoutUser();
+      const response = await logoutUser()
       if (response.success === true) {
-        setUser(null);
-        setIsAuthenticated(false);
-        navigate('/login');
-        return;
+        setUser(null)
+        setIsAuthenticated(false)
+        navigate('/login')
+        return
       }
-      alert(response.message);
+      alert(response.message)
     } catch (error) {
-      console.log('logout error:', error);
-      alert(error);
+      console.log('logout error:', error)
+      alert(error)
     }
-  };
- 
+  }
+
   const linkClass = ({ isActive }) =>
-    `px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
+    `px-3 py-2 text-sm font-medium transition-colors duration-200 ${
       isActive
-        ? 'text-rose-600 bg-rose-50'
-        : 'text-gray-700 hover:text-rose-600 hover:bg-rose-50/60'
-    }`;
- 
+        ? 'text-[#C4782A]'
+        : 'text-[#5C574F] hover:text-[#C4782A]'
+    }`
+
   return (
-    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
-         
-          {/* Left – Logo + Brand */}
-          <div className="flex items-center gap-8">
-            <NavLink to="/home" className="flex items-center gap-2 shrink-0">
-              <div className="w-9 h-9 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white font-bold text-lg">
-                K
-              </div>
-              <span className="text-xl font-bold text-gray-900 tracking-tight hidden sm:block">
-                Kashtiya <span className="text-rose-600">Matrimony</span>
-              </span>
+    <nav className="sticky top-0 z-50 border-b border-[#E8E0D5] bg-[#FBF8F4]/95 backdrop-blur-sm">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        <div className="relative flex h-16 items-center justify-between">
+          {/* Left – Navigation links */}
+          <div className="flex items-center gap-1">
+            <NavLink to="/home" className={linkClass}>
+              Home
             </NavLink>
- 
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center gap-1">
-              <NavLink to="/home" className={linkClass}>
-                Home
+            <NavLink to="/about" className={`${linkClass} hidden sm:inline-flex`}>
+              About Us
+            </NavLink>
+            {isAuthenticated && (
+              <NavLink to="/user" className={`${linkClass} hidden md:inline-flex`}>
+                My Profile
               </NavLink>
-              <NavLink to="/about" className={linkClass}>
-                About Us
-              </NavLink>
-              {isAuthenticated && (
-                <NavLink to="/user" className={linkClass}>
-                  My Profile
-                </NavLink>
-              )}
-            </div>
+            )}
           </div>
- 
-          {/* Right – Auth Actions */}
-          <div className="flex items-center gap-3">
+
+          {/* Center – Logo */}
+          <NavLink
+            to="/home"
+            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2"
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C4782A] text-sm font-bold text-white">
+              K
+            </div>
+            <span className="hidden font-serif text-lg font-medium tracking-tight text-[#1A1916] sm:block">
+              Kashtiya
+            </span>
+          </NavLink>
+
+          {/* Right – Auth actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
             {isAuthenticated ? (
               <>
-                {/* Mobile Profile link */}
                 <NavLink
                   to="/user"
-                  className="md:hidden px-3 py-2 text-sm font-medium text-gray-700 hover:text-rose-600"
+                  className="md:hidden px-3 py-2 text-sm font-medium text-[#5C574F] hover:text-[#C4782A]"
                 >
                   Profile
                 </NavLink>
- 
                 <button
                   onClick={handleLogout}
-                  className="px-4 py-2 rounded-lg text-sm font-medium
-                             text-rose-600 border border-rose-200
-                             hover:bg-rose-50 hover:border-rose-300
-                             active:scale-95 transition-all duration-200
-                             focus:outline-none focus:ring-2 focus:ring-rose-500/30"
+                  className="rounded-xl border border-[#E8E0D5] bg-white px-4 py-2 text-sm font-medium text-[#5C574F]
+                             transition-all duration-200
+                             hover:border-[#C4782A] hover:text-[#C4782A]
+                             active:scale-95"
                 >
                   Logout
                 </button>
@@ -88,18 +85,18 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
               <>
                 <button
                   onClick={() => navigate('/login')}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-rose-600 transition-colors"
+                  className="px-3 py-2 text-sm font-medium text-[#5C574F] transition-colors hover:text-[#C4782A]"
                 >
-                  Login
+                  Sign in
                 </button>
                 <button
                   onClick={() => navigate('/register')}
-                  className="px-4 py-2 rounded-lg text-sm font-semibold text-white
-                             bg-rose-600 hover:bg-rose-700
-                             shadow-sm hover:shadow transition-all duration-200
-                             focus:outline-none focus:ring-2 focus:ring-rose-500/40"
+                  className="rounded-xl bg-[#C4782A] px-4 py-2 text-sm font-semibold text-white
+                             shadow-sm transition-all duration-200
+                             hover:bg-[#A8651F] hover:shadow-md
+                             active:scale-95"
                 >
-                  Register Free
+                  Join free
                 </button>
               </>
             )}
@@ -107,6 +104,5 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
         </div>
       </div>
     </nav>
-  );
+  )
 }
- 
