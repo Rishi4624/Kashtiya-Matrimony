@@ -32,6 +32,7 @@ export default function ChatBoard() {
     })
     socket.on('connect_error', () => setStatus('Unable to connect to chat'))
     socket.on('new-message', (message) => setMessages((current) => [...current, message]))
+    socket.on('chat-deleted', () => setMessages([]))
 
     return () => {
       socket.disconnect()
@@ -51,6 +52,18 @@ export default function ChatBoard() {
       if (!response?.success) setStatus(response?.message || 'Message not sent')
     })
     setText('')
+  }
+
+  const deleteChat = () => {
+    if (!window.confirm('Delete this entire chat? This cannot be undone.')) return
+
+    socketRef.current?.emit('delete-chat', otherUserId, (response) => {
+      if (!response?.success) {
+        setStatus(response?.message || 'Chat could not be deleted')
+        return
+      }
+      navigate('/user')
+    })
   }
 
   const title = otherUser?.name || 'Your match'
@@ -85,6 +98,19 @@ export default function ChatBoard() {
               {status}
             </p>
           </div>
+
+          <button
+            type="button"
+            onClick={deleteChat}
+            disabled={status !== 'Connected'}
+            className="flex h-9 w-9 items-center justify-center rounded-full text-[#9CA3AF] transition hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+            aria-label="Delete chat"
+            title="Delete chat"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 6h18M9 6V4h6v2m-9 0 1 14h10l1-14M10 10v6m4-6v6" />
+            </svg>
+          </button>
         </header>
 
         {/* Messages */}

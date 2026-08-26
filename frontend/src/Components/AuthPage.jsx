@@ -17,6 +17,8 @@ export default function AuthPage({ setIsAuthenticated }) {
     email: '',
     password: '',
     confirmPassword: '',
+    gender: '',
+    religion: '',
     terms: false,
   })
  
@@ -37,7 +39,7 @@ export default function AuthPage({ setIsAuthenticated }) {
       alert('Passwords do not match!')
       return
     }
-    let response = await registerUser(registerData.name, registerData.email, registerData.password)
+    let response = await registerUser(registerData)
     if (response.success == true) {
       setUser(response.user)
       setIsAuthenticated(true)
@@ -118,7 +120,7 @@ export default function AuthPage({ setIsAuthenticated }) {
                     />
                   </div>
                 </div>
- 
+
                 {/* Password */}
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
@@ -225,6 +227,41 @@ export default function AuthPage({ setIsAuthenticated }) {
                       onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
                       className={inputClass}
                     />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Gender</label>
+                    <select
+                      required
+                      value={registerData.gender}
+                      onChange={(e) => setRegisterData({ ...registerData, gender: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg text-sm text-gray-800 bg-white border border-gray-300 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none"
+                    >
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Religion</label>
+                    <select
+                      required
+                      value={registerData.religion}
+                      onChange={(e) => setRegisterData({ ...registerData, religion: e.target.value })}
+                      className="w-full px-4 py-3 rounded-lg text-sm text-gray-800 bg-white border border-gray-300 focus:border-rose-400 focus:ring-2 focus:ring-rose-500/20 focus:outline-none"
+                    >
+                      <option value="">Select religion</option>
+                      <option>Hinduism</option>
+                      <option>Christianity</option>
+                      <option>Islam</option>
+                      <option>Buddhism</option>
+                      <option>Jainism</option>
+                      <option>Sikhism</option>
+                      <option>other</option>
+                    </select>
                   </div>
                 </div>
  

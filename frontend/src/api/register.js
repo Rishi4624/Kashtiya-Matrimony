@@ -1,9 +1,8 @@
 import axios from 'axios';
-async function registerUser(name, email, password) {
+async function registerUser(registerData) {
     try {
-        console.log("name:", name, "email:", email, "password:", password);
         let response = await axios.post(`${import.meta.env.VITE_AXIOS_API}/api/register`,
-            { name, email, password },
+            registerData,
             {withCredentials: true}
         
         );
