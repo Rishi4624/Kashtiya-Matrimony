@@ -1,9 +1,11 @@
 import React from 'react'
 import { addInterest } from '../api/addInterest'
-import default_image from '../assets/default_image.webp'
+import default_profile_male from '../assets/default-profile-male.jpg'
+import default_profile_female from '../assets/default-profile-female.jpg'
 
 export default function UserCard({ user, delay = '0ms', onClick }) {
-  const defaultAvatar = default_image
+  const defaultAvatar = user.avatar ? user.avatar : default_profile_male;
+  const defaultAvatar_female = user.avatar ? user.avatar : default_profile_female;
 
   const handleInterest = async (e) => {
     e.stopPropagation()
@@ -29,7 +31,7 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
         {/* Photo */}
         <div className="relative aspect-[4/5] overflow-hidden bg-[#E8E0D5]">
           <img
-            src={user.avatar || user.image || defaultAvatar}
+            src={user.avatar || user.image || user.gender == 'male'?defaultAvatar : defaultAvatar_female}
             alt={user.name}
             onError={(event) => {
               event.currentTarget.onerror = null

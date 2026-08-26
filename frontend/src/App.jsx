@@ -8,6 +8,7 @@ import AuthPage from './Components/AuthPage'
 import Navbar from './Components/Navbar'
 import User from './Components/User'
 import ChatBoard from './Components/ChatBoard'
+import ChatList from './Components/ChatList'
 import './App.css'
 
 
@@ -73,6 +74,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
           <Route path="/user" element={<User/>}/>
+          <Route path="/chats" element={<ChatList />} />
           <Route path="/chat/:id" element={<ChatBoard />} />
           <Route path="*" element={<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] text-white">
             <div className="text-center">

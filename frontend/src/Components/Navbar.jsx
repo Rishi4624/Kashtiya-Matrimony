@@ -42,8 +42,13 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
               About Us
             </NavLink>
             {isAuthenticated && (
-              <NavLink to="/user" className={`${linkClass} hidden md:inline-flex`}>
+              <NavLink to="/user" className={`${linkClass} hidden md:inline-flex md:ml-3`}>
                 My Profile
+              </NavLink>
+            )}
+            {isAuthenticated && (
+              <NavLink to="/chats" className={`${linkClass} hidden sm:inline-flex md:ml-2`}>
+                Chats
               </NavLink>
             )}
           </div>
