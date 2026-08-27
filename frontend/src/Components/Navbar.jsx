@@ -36,7 +36,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
           {/* Left – Navigation links */}
           <div className="flex items-center gap-1">
             <NavLink to="/home" className={linkClass}>
-              Home
+              Discover
             </NavLink>
             <NavLink to="/about" className={`${linkClass} hidden sm:inline-flex`}>
               About Us

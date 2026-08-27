@@ -9,6 +9,9 @@ import Navbar from './Components/Navbar'
 import User from './Components/User'
 import ChatBoard from './Components/ChatBoard'
 import ChatList from './Components/ChatList'
+import Landing from './Components/LandingPage'
+import PublicNavbar from './Components/PublicNavbar'
+import PublicInfo from './Components/PublicInfo'
 import './App.css'
 
 
@@ -59,14 +62,25 @@ function App() {
       {isAuthenticated === null ? (
         <div className="min-h-screen bg-[#0a0a1a]" />
       ) : isAuthenticated === false ? (
-        <AuthPage setIsAuthenticated={setIsAuthenticated} />
+        <>
+          <PublicNavbar />
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<PublicInfo type="contact" />} />
+            <Route path="/pricing" element={<PublicInfo type="pricing" />} />
+            <Route path="/login" element={<AuthPage setIsAuthenticated={setIsAuthenticated} />} />
+            <Route path="/register" element={<AuthPage setIsAuthenticated={setIsAuthenticated} initialMode="register" />} />
+            <Route path="*" element={<Landing />} />
+          </Routes>
+        </>
       ) : (<>
         <Navbar 
           isAuthenticated={isAuthenticated}
           setIsAuthenticated={setIsAuthenticated}
         />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           {/* <Route path="/profile" element={<Profile userData={users} />} /> */}

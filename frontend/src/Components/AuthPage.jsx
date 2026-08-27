@@ -4,10 +4,10 @@ import { loginUser } from '../api/login'
 import { registerUser } from '../api/register'
 import { useAuth } from '../contex/AuthContex.jsx'
 
-export default function AuthPage({ setIsAuthenticated }) {
+export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) {
   const navigate = useNavigate()
   const { setUser } = useAuth()
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(initialMode !== 'register')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
