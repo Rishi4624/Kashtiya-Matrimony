@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema({
     min: 18,
     max: 100
   },
+  city: {
+    type: String
+  },
+  state: {
+    type: String
+  },
   hobbies: {
     type: [String]
   },

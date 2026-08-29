@@ -6,21 +6,41 @@ dotenv.config();
 
 const register =  async (req, res) => {
     try {
-        const { name, email, password, gender, religion } = req.body;
-        // Here you can add logic to save the user data to your database
-        let flag = await User.findOne({ email }); // Replace with your actual database query
+        const {
+            name,
+            email,
+            password,
+            gender,
+            religion,
+            age,
+            city,
+            state,
+            location,
+            education,
+            occupation,
+            maritalStatus
+        } = req.body;
+
+        let flag = await User.findOne({ email });
         if (flag) {
             return res.status(201).json({ message: 'User already exists', success: false });
         }
+
         const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password,
-            age: req.body.age,
+            name,
+            email,
+            password,
+            age: age ? Number(age) : undefined,
+            city: city || undefined,
+            state: state || undefined,
+            location: location || [city, state].filter(Boolean).join(', ') || undefined,
+            education: education || undefined,
+            occupation: occupation || undefined,
+            maritalStatus: maritalStatus || undefined,
+            gender,
+            religion,
             hobbies: req.body.hobbies,
             interests: req.body.interests,
-            gender,
-            religion
         });
 
         const savedUser = await user.save();
