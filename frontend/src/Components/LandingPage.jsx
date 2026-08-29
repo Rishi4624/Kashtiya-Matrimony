@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import hero_page from '../assets/hero_couple.jpg'
-import mission_img from '../assets/mission_img.jpg'
+import mission_img1 from '../assets/mission_img1.jpg'
 import story3 from '../assets/story3.jpg'
-import story2 from '../assets/story2.jpg'
+import story2 from '../assets/mission_img.jpg'
 
 /* ── Images ── */
-const HERO_COUPLE = hero_page
-const STORY_1 = mission_img
-const STORY_2 = story2
+const HERO_COUPLE = mission_img1
+const STORY_1 = hero_page
+const STORY_2 =  story2
 const STORY_3 = story3
 
 export default function Landing() {

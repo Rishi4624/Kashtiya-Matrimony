@@ -3,6 +3,26 @@ import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../api/login'
 import { registerUser } from '../api/register'
 import { useAuth } from '../contex/AuthContex.jsx'
+import mission_img2 from '../assets/mission_img2.jpg'
+
+const profileSteps = [
+  {
+    title: 'Step 1: Age',
+    subtitle: 'How old are you?',
+  },
+  {
+    title: 'Step 2: City & State',
+    subtitle: 'Where are you based?',
+  },
+  {
+    title: 'Step 3: Education & Occupation',
+    subtitle: 'Tell us about your background',
+  },
+  {
+    title: 'Step 4: Marital Status',
+    subtitle: 'Choose your current status',
+  },
+]
 
 export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) {
   const navigate = useNavigate()
@@ -10,6 +30,9 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
   const [isLogin, setIsLogin] = useState(initialMode !== 'register')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showProfileSetup, setShowProfileSetup] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [loginData, setLoginData] = useState({ email: '', password: '', remember: false })
   const [registerData, setRegisterData] = useState({
@@ -21,31 +44,104 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
     religion: '',
     terms: false,
   })
+  const [profileData, setProfileData] = useState({
+    age: '',
+    city: '',
+    state: '',
+    education: '',
+    occupation: '',
+    maritalStatus: '',
+  })
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
-    let response = await loginUser(loginData.email, loginData.password)
-    if (response.success == true) {
+    const response = await loginUser(loginData.email, loginData.password)
+    if (response.success === true) {
       setUser(response.user)
       setIsAuthenticated(true)
       navigate('/home')
     }
-    alert(`${response.message}`)
+    alert(response.message)
   }
 
-  const handleRegisterSubmit = async (e) => {
+  const validateProfileStep = () => {
+    if (currentStep === 0) {
+      if (!profileData.age || Number(profileData.age) < 18) {
+        alert('Please enter a valid age above 17.')
+        return false
+      }
+    }
+
+    if (currentStep === 1) {
+      if (!profileData.city.trim() || !profileData.state.trim()) {
+        alert('Please enter both city and state.')
+        return false
+      }
+    }
+
+    if (currentStep === 2) {
+      if (!profileData.education.trim() || !profileData.occupation.trim()) {
+        alert('Please fill in both education and occupation.')
+        return false
+      }
+    }
+
+    if (currentStep === 3 && !profileData.maritalStatus) {
+      alert('Please select your marital status.')
+      return false
+    }
+
+    return true
+  }
+
+  const handleInitialRegisterSubmit = (e) => {
     e.preventDefault()
+
     if (registerData.password !== registerData.confirmPassword) {
       alert('Passwords do not match!')
       return
     }
-    let response = await registerUser(registerData)
-    if (response.success == true) {
+
+    if (registerData.password.length < 6) {
+      alert('Password must be at least 6 characters long.')
+      return
+    }
+
+    setShowProfileSetup(true)
+    setCurrentStep(0)
+  }
+
+  const handleProfileSubmit = async () => {
+    if (!validateProfileStep()) return
+
+    if (currentStep < profileSteps.length - 1) {
+      setCurrentStep((step) => step + 1)
+      return
+    }
+
+    setIsSubmitting(true)
+
+    const finalData = {
+      ...registerData,
+      age: Number(profileData.age),
+      city: profileData.city.trim(),
+      state: profileData.state.trim(),
+      location: [profileData.city.trim(), profileData.state.trim()].filter(Boolean).join(', '),
+      education: profileData.education.trim(),
+      occupation: profileData.occupation.trim(),
+      maritalStatus: profileData.maritalStatus,
+    }
+
+    const response = await registerUser(finalData)
+
+    if (response.success === true) {
       setUser(response.user)
       setIsAuthenticated(true)
       navigate('/home')
     }
-    alert(`${response.message}`)
+
+    alert(response.message || 'Registration failed')
+    setIsSubmitting(false)
   }
 
   const inputClass =
@@ -54,58 +150,155 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
   const selectClass =
     'w-full px-4 py-3 rounded-xl text-sm text-[#2C2A26] bg-[#FBF8F4] border border-[#E8E0D5] focus:border-[#C4782A] focus:ring-2 focus:ring-[#C4782A]/20 focus:outline-none transition-all duration-200'
 
+  const renderProfileStep = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <div className="space-y-2">
+            <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Age</label>
+            <input
+              type="number"
+              min="18"
+              max="100"
+              required
+              value={profileData.age}
+              onChange={(e) => setProfileData({ ...profileData, age: e.target.value })}
+              className={inputClass.replace('pl-11 pr-4', 'px-4')}
+              placeholder="Enter your age"
+            />
+          </div>
+        )
+      case 1:
+        return (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">City</label>
+              <input
+                type="text"
+                required
+                value={profileData.city}
+                onChange={(e) => setProfileData({ ...profileData, city: e.target.value })}
+                className={selectClass}
+                placeholder="City"
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">State</label>
+              <input
+                type="text"
+                required
+                value={profileData.state}
+                onChange={(e) => setProfileData({ ...profileData, state: e.target.value })}
+                className={selectClass}
+                placeholder="State"
+              />
+            </div>
+          </div>
+        )
+      case 2:
+        return (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Education</label>
+              <input
+                type="text"
+                required
+                value={profileData.education}
+                onChange={(e) => setProfileData({ ...profileData, education: e.target.value })}
+                className={selectClass}
+                placeholder="e.g. B.Tech"
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Occupation</label>
+              <input
+                type="text"
+                required
+                value={profileData.occupation}
+                onChange={(e) => setProfileData({ ...profileData, occupation: e.target.value })}
+                className={selectClass}
+                placeholder="e.g. Software Engineer"
+              />
+            </div>
+          </div>
+        )
+      case 3:
+        return (
+          <div>
+            <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Marital Status</label>
+            <select
+              required
+              value={profileData.maritalStatus}
+              onChange={(e) => setProfileData({ ...profileData, maritalStatus: e.target.value })}
+              className={selectClass}
+            >
+              <option value="">Select marital status</option>
+              <option value="Never married">Never married</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Widowed">Widowed</option>
+              <option value="Separated">Separated</option>
+            </select>
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
   return (
-    <div className="min-h-[calc(100vh-72px)] bg-[#F7F3EE] font-sans text-[#2C2A26] antialiased">
-      <div className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-10">
+    <div
+      className="relative min-h-[calc(100vh-72px)] overflow-hidden bg-[#F7F3EE] font-sans text-[#2C2A26] antialiased"
+      style={{
+        backgroundImage: mission_img2,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-[#f7f3ee]/70 backdrop-blur-[1px]" />
+      <div className="relative z-10 flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-10">
         <div className="w-full max-w-md">
-          {/* Brand */}
           <div className="mb-8 text-center">
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#C4782A]">
               Kashtiya Matrimony
             </p>
             <h1 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#1A1916]">
-              {isLogin ? 'Welcome back' : 'Create account'}
+              {isLogin ? 'Welcome back' : showProfileSetup ? 'Complete your profile' : 'Create account'}
             </h1>
             <p className="mt-2 text-sm text-[#5C574F]">
               {isLogin
                 ? 'Sign in to continue your journey'
-                : 'Join and find your life partner with intention'}
+                : showProfileSetup
+                  ? 'Finish a few details to personalize your profile'
+                  : 'Join and find your life partner with intention'}
             </p>
           </div>
 
-          {/* Auth Card */}
           <div className="rounded-3xl border border-[#E8E0D5] bg-[#FBF8F4] p-6 sm:p-8 shadow-sm">
-            {/* Tabs */}
-            <div className="mb-7 flex rounded-xl border border-[#E8E0D5] bg-white p-1">
-              <button
-                onClick={() => setIsLogin(true)}
-                className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
-                  isLogin
-                    ? 'bg-[#C4782A] text-white shadow-sm'
-                    : 'text-[#5C574F] hover:text-[#1A1916]'
-                }`}
-              >
-                Login
-              </button>
-              <button
-                onClick={() => setIsLogin(false)}
-                className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
-                  !isLogin
-                    ? 'bg-[#C4782A] text-white shadow-sm'
-                    : 'text-[#5C574F] hover:text-[#1A1916]'
-                }`}
-              >
-                Register
-              </button>
-            </div>
+            {!isLogin && !showProfileSetup && (
+              <div className="mb-7 flex rounded-xl border border-[#E8E0D5] bg-white p-1">
+                <button
+                  onClick={() => setIsLogin(true)}
+                  className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
+                    isLogin ? 'bg-[#C4782A] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1A1916]'
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setIsLogin(false)}
+                  className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
+                    !isLogin ? 'bg-[#C4782A] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1A1916]'
+                  }`}
+                >
+                  Register
+                </button>
+              </div>
+            )}
 
-            {/* ========== LOGIN FORM ========== */}
             {isLogin ? (
               <form className="space-y-5" onSubmit={handleLoginSubmit}>
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">
-                    Email Address
-                  </label>
+                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Email Address</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39E96]">
                       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,16 +371,53 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white
-                             shadow-sm transition-all duration-200
-                             hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
                 >
                   Sign In
                 </button>
               </form>
+            ) : showProfileSetup ? (
+              <div className="space-y-5">
+                <div>
+                  <div className="mb-3 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-[#A39E96]">
+                    <span>Profile setup</span>
+                    <span>
+                      {currentStep + 1}/{profileSteps.length}
+                    </span>
+                  </div>
+                  <div className="mb-5 h-2 w-full rounded-full bg-[#EEE5DA]">
+                    <div
+                      className="h-2 rounded-full bg-[#C4782A] transition-all duration-200"
+                      style={{ width: `${((currentStep + 1) / profileSteps.length) * 100}%` }}
+                    />
+                  </div>
+                  <h2 className="text-xl font-semibold text-[#1A1916]">{profileSteps[currentStep].title}</h2>
+                  <p className="mt-1 text-sm text-[#5C574F]">{profileSteps[currentStep].subtitle}</p>
+                </div>
+
+                {renderProfileStep()}
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
+                    disabled={currentStep === 0}
+                    className="flex-1 rounded-xl border border-[#E8E0D5] bg-white py-3 text-sm font-semibold text-[#2C2A26] disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleProfileSubmit}
+                    disabled={isSubmitting}
+                    className="flex-1 rounded-xl bg-[#C4782A] py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isSubmitting ? 'Saving...' : currentStep === profileSteps.length - 1 ? 'Finish' : 'Next'}
+                  </button>
+                </div>
+              </div>
             ) : (
-              /* ========== REGISTER FORM ========== */
-              <form className="space-y-5" onSubmit={handleRegisterSubmit}>
+              <form className="space-y-5" onSubmit={handleInitialRegisterSubmit}>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Full Name</label>
                   <div className="relative">
@@ -208,9 +438,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">
-                    Email Address
-                  </label>
+                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Email Address</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39E96]">
                       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -300,9 +528,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                 </div>
 
                 <div>
-                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">
-                    Confirm Password
-                  </label>
+                  <label className="mb-1.5 block text-sm font-medium text-[#2C2A26]">Confirm Password</label>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39E96]">
                       <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -315,9 +541,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                       placeholder="••••••••"
                       minLength={6}
                       value={registerData.confirmPassword}
-                      onChange={(e) =>
-                        setRegisterData({ ...registerData, confirmPassword: e.target.value })
-                      }
+                      onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
                       className={`${inputClass} pr-12`}
                     />
                     <button
@@ -362,11 +586,9 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white
-                             shadow-sm transition-all duration-200
-                             hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
                 >
-                  Create Account
+                  Continue profile setup
                 </button>
               </form>
             )}
