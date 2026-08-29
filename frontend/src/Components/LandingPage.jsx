@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import hero_page from '../assets/hero_couple.jpg'
+import mission_img from '../assets/mission_img.jpg'
+import story3 from '../assets/story3.jpg'
+import story2 from '../assets/story2.jpg'
 
-/* ── Images (swap for your assets if preferred) ── */
-const HERO_COUPLE =hero_page;
-const STORY_1 =
-  'https://images.unsplash.com/photo-1606800052052-a08af952dab7?auto=format&fit=crop&w=600&q=80'
-const STORY_2 =
-  'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80'
-const STORY_3 =
-  'https://images.unsplash.com/photo-1591604466107-ec195f252baa?auto=format&fit=crop&w=600&q=80'
+/* ── Images ── */
+const HERO_COUPLE = hero_page
+const STORY_1 = mission_img
+const STORY_2 = story2
+const STORY_3 = story3
 
 export default function Landing() {
+  const navigate = useNavigate()
+
+  // Search filters (kept for the lower search section)
   const [filters, setFilters] = useState({
     lookingFor: '',
     minAge: '',
@@ -20,15 +23,34 @@ export default function Landing() {
     city: '',
   })
 
+  // Registration form state
+  const [reg, setReg] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    lookingFor: '',
+    community: '',
+  })
+
   const update = (e) => {
     const { name, value } = e.target
     setFilters((c) => ({ ...c, [name]: value }))
   }
 
+  const updateReg = (e) => {
+    const { name, value } = e.target
+    setReg((c) => ({ ...c, [name]: value }))
+  }
+
   const onSearch = (e) => {
     e.preventDefault()
-    // wire to your /profiles or /search route
-    window.location.href = '/profiles'
+    navigate('./register')
+  }
+
+  const onRegister = (e) => {
+    e.preventDefault()
+    // You can pass reg data via state or query if needed
+    navigate('/register', { state: reg })
   }
 
   const field =
@@ -36,25 +58,30 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-[#FBF7F2] text-[#2C2419] antialiased">
-      {/* ════════════ NAV ════════════ */}
-    
-
       {/* ════════════ HERO ════════════ */}
       <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16">
-          {/* Left */}
+        {/* Background image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${HERO_COUPLE})` }}
+        />
+        {/* Soft dark overlay for contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#2C2419]/80 via-[#2C2419]/55 to-[#2C2419]/30" />
+
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-2 lg:gap-16">
+          {/* Left — copy */}
           <div>
-            <span className="mb-5 inline-block rounded-full bg-[#C45C3E]/10 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#C45C3E]">
+            <span className="mb-5 inline-block rounded-full bg-white/15 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-[#E8A07A] backdrop-blur-sm">
               Wedding season 2026
             </span>
 
-            <h1 className="mb-5 font-serif text-4xl font-medium leading-[1.15] tracking-tight text-[#2C2419] sm:text-5xl lg:text-[3.25rem]">
+            <h1 className="mb-5 font-serif text-4xl font-medium leading-[1.15] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
               The season of{' '}
-              <span className="italic text-[#C45C3E]">marigolds</span>
+              <span className="italic text-[#E8A07A]">marigolds</span>
               {' '}— and of finding your person.
             </h1>
 
-            <p className="mb-8 max-w-md text-base leading-relaxed text-[#6B6258]">
+            <p className="mb-8 max-w-md text-base leading-relaxed text-[#EDE6DC]/90">
               Gulmohar is a calm, family-first matrimony service. Every profile is
               ID-verified, every introduction is one your parents can read too.
             </p>
@@ -68,38 +95,136 @@ export default function Landing() {
               </a>
               <a
                 href="#how"
-                className="rounded-full border border-[#D4C8B8] bg-transparent px-6 py-2.5 text-sm font-semibold text-[#2C2419] transition hover:border-[#C45C3E] hover:text-[#C45C3E]"
+                className="rounded-full border border-white/40 bg-transparent px-6 py-2.5 text-sm font-semibold text-white transition hover:border-[#E8A07A] hover:text-[#E8A07A]"
               >
                 How it works
               </a>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#6B6258]">
-              <span><strong className="font-semibold text-[#2C2419]">2.4L+</strong> verified profiles</span>
-              <span className="hidden text-[#D4C8B8] sm:inline">|</span>
-              <span><strong className="font-semibold text-[#2C2419]">190+</strong> Indian cities</span>
-              <span className="hidden text-[#D4C8B8] sm:inline">|</span>
-              <span><strong className="font-semibold text-[#2C2419]">12,000</strong> weddings a year</span>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-[#EDE6DC]/80">
+              <span>
+                <strong className="font-semibold text-white">2.4L+</strong> verified profiles
+              </span>
+              <span className="hidden text-white/30 sm:inline">|</span>
+              <span>
+                <strong className="font-semibold text-white">190+</strong> Indian cities
+              </span>
+              <span className="hidden text-white/30 sm:inline">|</span>
+              <span>
+                <strong className="font-semibold text-white">12,000</strong> weddings a year
+              </span>
             </div>
           </div>
 
-          {/* Right — couple card */}
+          {/* Right — Registration form card (replaces the image cart) */}
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="overflow-hidden rounded-[1.75rem] shadow-2xl shadow-[#C45C3E]/15">
-              <img
-                src={HERO_COUPLE}
-                alt="Indian wedding couple"
-                className="aspect-[4/5] w-full object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-4 left-4 right-4 rounded-2xl border border-[#EDE6DC] bg-white/95 p-4 shadow-lg backdrop-blur-sm sm:left-6 sm:right-auto sm:max-w-[220px]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#C45C3E]">
-                Matched on Gulmohar
-              </p>
-              <p className="mt-1 font-serif text-lg font-medium text-[#2C2419]">
-                Nikita &amp; Aarav
-              </p>
-              <p className="text-xs text-[#6B6258]">Jaipur · December wedding</p>
+            <div className="overflow-hidden rounded-[1.75rem] border border-white/20 bg-white/95 p-6 shadow-2xl shadow-black/20 backdrop-blur-md sm:p-8">
+              <div className="mb-6">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[#C45C3E]">
+                  Start free
+                </p>
+                <h2 className="mt-1 font-serif text-2xl font-medium text-[#2C2419]">
+                  Create your profile
+                </h2>
+                <p className="mt-1 text-sm text-[#6B6258]">
+                  Takes under 2 minutes. Your details stay private until you choose otherwise.
+                </p>
+              </div>
+
+              <form onSubmit={onRegister} className="space-y-4">
+                <div>
+                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[#9A9085]">
+                    Full name
+                  </label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={reg.fullName}
+                    onChange={updateReg}
+                    placeholder="Your name"
+                    required
+                    className={field}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[#9A9085]">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={reg.email}
+                    onChange={updateReg}
+                    placeholder="you@example.com"
+                    required
+                    className={field}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[#9A9085]">
+                    Phone
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={reg.phone}
+                    onChange={updateReg}
+                    placeholder="+91 98765 43210"
+                    className={field}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[#9A9085]">
+                      Looking for
+                    </label>
+                    <select
+                      name="lookingFor"
+                      value={reg.lookingFor}
+                      onChange={updateReg}
+                      className={field}
+                    >
+                      <option value="">Any</option>
+                      <option value="bride">Bride</option>
+                      <option value="groom">Groom</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-[#9A9085]">
+                      Community
+                    </label>
+                    <select
+                      name="community"
+                      value={reg.community}
+                      onChange={updateReg}
+                      className={field}
+                    >
+                      <option value="">Any</option>
+                      <option>Maratha</option>
+                      <option>Sikh</option>
+                      <option>Brahmin</option>
+                      <option>Kannada</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="mt-2 w-full rounded-full bg-[#C45C3E] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A84B32]"
+                >
+                  Register free
+                </button>
+
+                <p className="text-center text-xs text-[#9A9085]">
+                  Already have an account?{' '}
+                  <Link to="/login" className="font-medium text-[#C45C3E] hover:underline">
+                    Sign in
+                  </Link>
+                </p>
+              </form>
             </div>
           </div>
         </div>
@@ -369,8 +494,6 @@ export default function Landing() {
           </Link>
         </div>
       </section>
-
-      
     </div>
   )
 }
