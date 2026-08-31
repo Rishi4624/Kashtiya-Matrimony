@@ -14,16 +14,9 @@ import PublicNavbar from './Components/PublicNavbar'
 import PublicInfo from './Components/PublicInfo'
 import './App.css'
 
-
-
-  export const users = [];
-
 function App() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-
-   
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -44,8 +37,6 @@ function App() {
         setIsAuthenticated(false);
       }
     };
-
-
     checkAuthentication();
   },[navigate])
   

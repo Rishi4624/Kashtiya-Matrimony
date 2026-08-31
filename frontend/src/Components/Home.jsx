@@ -1,22 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import UserCard from './UserCard'
 import { useNavigate } from 'react-router-dom'
-import getProfiles from '../api/getProfiles.js'
+import { useAuth } from '../contex/AuthContex.jsx'
+
 import heroBackground from '../assets/mission_img1.jpg'
 
 export default function Home() {
     const navigate = useNavigate()
-    const [users, setUsers] = useState([])
-    const [filters, setFilters] = useState({ gender: '', minAge: '', maxAge: '', religion: '', motherTongue: '', location: '', maritalStatus: '', education: '', occupation: '', diet: '', smoking: '', drinking: '' })
+    const { users } = useAuth()
+    const [filters, setFilters] = useState({
+         gender: '', 
+         minAge: '', 
+         maxAge: '', 
+         religion: '', 
+         motherTongue: '', 
+         location: '', 
+         maritalStatus: '', 
+         education: '', 
+         occupation: '', 
+         diet: '', 
+         smoking: '', 
+         drinking: '' 
+        })
     const [appliedFilters, setAppliedFilters] = useState(filters)
 
-    useEffect(() => {
-        const loadProfiles = async () => {
-            const profiles = await getProfiles()
-            setUsers(Array.isArray(profiles) ? profiles : [])
-        }
-        loadProfiles()
-    }, [])
+    // useEffect(() => {
+    //     console.log('mounted')
+    //      const loadProfiles = async () => {
+    //     const profiles = await getProfiles()
+    //     setUsers(Array.isArray(profiles) ? profiles : [])
+    // }
+    // loadProfiles()
+    // },[])
 
     const updateFilter = (event) => {
         const { name, value } = event.target

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import logoutUser from '../api/logout.js'
 import { useAuth } from '../contex/AuthContex.jsx'
+import Requestes from './Requestes.jsx'
 
 export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate()
@@ -10,7 +11,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
 
   const likedUsers = user?.likes || user?.like || []
   const interestTags = user?.interests || []
-  const requestCount = likedUsers.length + interestTags.length
+  const requestCount = likedUsers.length
 
   const handleLogout = async () => {
     try {
@@ -98,98 +99,13 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
                 Chats
               </NavLink>
             )}
-
-            
-
-            {showRequests && (
-              <div className="absolute left-0 top-full z-50 mt-2 w-[340px] rounded-2xl border border-[#E8E0D5] bg-white p-3 shadow-xl shadow-[#2C2A26]/10">
-                <div className="mb-2 flex items-center justify-between">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#A39E96]">
-                    Requests
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => setShowRequests(false)}
-                    className="text-xs text-[#A39E96] hover:text-[#5C574F]"
-                  >
-                    Close
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  <div>
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A39E96]">
-                      Received likes
-                    </p>
-                    {likedUsers.length > 0 ? (
-                      <div className="space-y-2">
-                        {likedUsers.map((likedUser, index) => {
-                          const likedUserId = likedUser?._id || likedUser?.id
-                          const likedUserName = likedUser?.name || 'User'
-                          const likedUserLocation = likedUser?.location || 'Location unavailable'
-                          const likedUserAvatar =
-                            likedUser?.avatar || likedUser?.image || likedUser?.profilePic
-
-                          return (
-                            <div
-                              key={likedUserId || index}
-                              className="flex items-center gap-3 rounded-xl border border-[#E8E0D5] bg-[#FBF8F4] p-2.5"
-                            >
-                              <img
-                                src={likedUserAvatar || 'https://via.placeholder.com/72'}
-                                alt={likedUserName}
-                                className="h-10 w-10 rounded-full object-cover"
-                              />
-                              <div className="min-w-0 flex-1">
-                                <p className="truncate text-sm font-semibold text-[#1A1916]">
-                                  {likedUserName}
-                                </p>
-                                <p className="truncate text-[11px] text-[#A39E96]">
-                                  {likedUserLocation}
-                                </p>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => navigate(`/profile/${likedUserId}`)}
-                                className="rounded-lg bg-[#C4782A] px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-[#A8651F]"
-                              >
-                                View
-                              </button>
-                            </div>
-                          )
-                        })}
-                      </div>
-                    ) : (
-                      <p className="rounded-xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] px-3 py-4 text-xs text-[#A39E96]">
-                        No one has liked your profile yet.
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#A39E96]">
-                      Interests
-                    </p>
-                    {interestTags.length > 0 ? (
-                      <div className="flex flex-wrap gap-2">
-                        {interestTags.map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-[#E8E0D5] bg-[#FBF8F4] px-2.5 py-1 text-xs text-[#5C574F]"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="rounded-xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] px-3 py-4 text-xs text-[#A39E96]">
-                        No interests added yet.
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
+            {showRequests && <Requestes 
+              showRequests={showRequests}
+              setShowRequests={setShowRequests}
+              likedUsers={likedUsers}
+              interestTags={interestTags}
+              navigate={navigate}
+              />}
           </div>
 
           {/* Center – Logo */}
