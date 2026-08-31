@@ -4,7 +4,6 @@ import { useAuth } from '../contex/AuthContex.jsx'
 import updateUser from '../api/updateUser.js'
 import { upload_image } from '../api/upload-image.js'
 import { upload_post } from '../api/upload-post.js'
-import acceptInterest from '../api/acceptInterest.js'
 
 export default function User() {
   const { user, setUser } = useAuth()
@@ -15,8 +14,6 @@ export default function User() {
   const [previewAvatar, setPreviewAvatar] = useState(null)
   const [hobbyInput, setHobbyInput] = useState('')
   const [interestInput, setInterestInput] = useState('')
-  const [activeTab, setActiveTab] = useState('posts')
-  const [acceptingUserId, setAcceptingUserId] = useState(null)
 
   const avatarInputRef = useRef(null)
   const postsInputRef = useRef(null)
@@ -177,38 +174,6 @@ export default function User() {
     setFormData((prev) => ({
       ...prev,
       interests: (prev.interests || []).filter((i) => i !== interest),
-    }))
-  }
-
-  const isMutualLike = (likedUser) => {
-    const currentUserId = String(user._id || user.id)
-    return (likedUser.likes || []).some((likeId) => String(likeId?._id || likeId) === currentUserId)
-  }
-
-  const hasChatAccess = (likedUser) => {
-    const likedUserId = String(likedUser?._id || likedUser?.id)
-    return (
-      (user.acceptedChats || []).some(
-        (acceptedUser) => String(acceptedUser?._id || acceptedUser) === likedUserId
-      ) || isMutualLike(likedUser)
-    )
-  }
-
-  const handleAcceptInterest = async (likedUser) => {
-    const likedUserId = likedUser?._id || likedUser?.id
-    if (!likedUserId) return
-
-    setAcceptingUserId(likedUserId)
-    const response = await acceptInterest(likedUserId)
-    setAcceptingUserId(null)
-    if (!response.success) {
-      alert(response.message || 'Unable to accept interest')
-      return
-    }
-
-    setUser((currentUser) => ({
-      ...currentUser,
-      acceptedChats: [...(currentUser.acceptedChats || []), likedUser],
     }))
   }
 
@@ -523,71 +488,6 @@ export default function User() {
               </>
             )}
 
-            {/* Received interests (always visible below) */}
-            {!isEditing && (
-              <div className="mt-10 border-t border-[#E8E0D5] pt-8">
-                <div className="mb-4 flex items-center gap-3">
-                  <button
-                    onClick={() => setActiveTab('posts')}
-                    className={`text-sm font-medium transition ${activeTab === 'posts' ? 'text-[#C4782A]' : 'text-[#A39E96] hover:text-[#5C574F]'}`}
-                  >
-                    Photos
-                  </button>
-                  <span className="text-[#E8E0D5]">·</span>
-                  <button
-                    onClick={() => setActiveTab('likes')}
-                    className={`text-sm font-medium transition ${activeTab === 'likes' ? 'text-[#C4782A]' : 'text-[#A39E96] hover:text-[#5C574F]'}`}
-                  >
-                    Received interests ({displayLikes.length})
-                  </button>
-                </div>
-
-                {activeTab === 'likes' && (
-                  displayLikes.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                      {displayLikes.map((likedUser, index) => {
-                        const likedUserId = likedUser?._id || likedUser?.id
-                        const likedUserName = likedUser?.name || 'User'
-                        const likedUserLocation = likedUser?.location || 'Location unavailable'
-                        const likedUserAvatar = likedUser?.avatar || likedUser?.image || likedUser?.profilePic
-
-                        return (
-                          <div key={likedUserId || index} className="flex items-center gap-3 rounded-2xl border border-[#E8E0D5] bg-white p-3">
-                            <img src={likedUserAvatar || 'https://via.placeholder.com/96'} alt={likedUserName} className="h-12 w-12 rounded-full object-cover" />
-                            <div className="min-w-0 flex-1">
-                              <p className="truncate text-sm font-semibold text-[#1A1916]">{likedUserName}</p>
-                              <p className="truncate text-xs text-[#A39E96]">{likedUserLocation}</p>
-                            </div>
-                            {hasChatAccess(likedUser) ? (
-                              <button
-                                type="button"
-                                onClick={() => navigate(`/chat/${likedUserId}`, { state: { user: likedUser } })}
-                                className="shrink-0 rounded-xl bg-[#C4782A] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#A8651F]"
-                              >
-                                Open chat
-                              </button>
-                            ) : (
-                              <button
-                                type="button"
-                                disabled={acceptingUserId === likedUserId}
-                                onClick={() => handleAcceptInterest(likedUser)}
-                                className="shrink-0 rounded-xl bg-[#C4782A] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#A8651F] disabled:opacity-60"
-                              >
-                                {acceptingUserId === likedUserId ? '...' : 'Accept'}
-                              </button>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  ) : (
-                    <p className="rounded-2xl border border-dashed border-[#E8E0D5] py-10 text-center text-sm text-[#A39E96]">
-                      No one has shown interest yet
-                    </p>
-                  )
-                )}
-              </div>
-            )}
           </div>
         </div>
       </div>

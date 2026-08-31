@@ -4,27 +4,49 @@ export default function PublicNavbar() {
   const navigate = useNavigate()
 
   const linkClass = ({ isActive }) =>
-    `px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-      isActive
-        ? 'text-[#C4782A]'
-        : 'text-[#5C574F] hover:text-[#C4782A]'
-    }`
+    [
+      'relative inline-flex items-center px-3 py-2 text-sm font-medium transition-all duration-200',
+      isActive ? 'text-[#1A1916]' : 'text-[#5C574F] hover:text-[#C4782A]',
+      // underline base
+      'after:absolute after:-bottom-1 after:left-1/2 after:h-[2px] after:w-[calc(100%-0.5rem)] after:-translate-x-1/2 after:rounded-full after:bg-[#C4782A] after:content-[""]',
+      // show underline when active, or on hover when inactive
+      isActive ? 'after:opacity-100' : 'after:opacity-0 hover:after:opacity-100',
+    ].join(' ')
 
   return (
     <nav className="sticky top-0 z-50 border-b border-[#E8E0D5] bg-[#FBF8F4]/95 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex items-center gap-3 sm:gap-5">
-            <NavLink to="/" className={linkClass}>
-              Home
+            {/* Pass the function directly — do NOT wrap it in a template string */}
+            <NavLink to="/" className={linkClass} end>
+              Discover
             </NavLink>
-            <NavLink to="/about" className={`${linkClass} hidden sm:inline-flex`}>
+
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                `${linkClass({ isActive })} hidden sm:inline-flex`
+              }
+            >
               About Us
             </NavLink>
-            <NavLink to="/contact" className={`${linkClass} hidden md:inline-flex`}>
+
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                `${linkClass({ isActive })} hidden md:inline-flex`
+              }
+            >
               Contact
             </NavLink>
-            <NavLink to="/pricing" className={`${linkClass} hidden md:inline-flex`}>
+
+            <NavLink
+              to="/pricing"
+              className={({ isActive }) =>
+                `${linkClass({ isActive })} hidden md:inline-flex`
+              }
+            >
               Pricing
             </NavLink>
           </div>
