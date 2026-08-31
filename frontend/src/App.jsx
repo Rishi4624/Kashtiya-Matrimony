@@ -12,10 +12,13 @@ import ChatList from './Components/ChatList'
 import Landing from './Components/LandingPage'
 import PublicNavbar from './Components/PublicNavbar'
 import PublicInfo from './Components/PublicInfo'
+import RequestsPage from './Components/RequestsPage.jsx'
+import { useAuth } from './contex/AuthContex.jsx'
 import './App.css'
 
 function App() {
   const navigate = useNavigate();
+  const { users } = useAuth()
   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
@@ -79,6 +82,7 @@ function App() {
           <Route path="/login" element={<AuthPage />} />
           <Route path="/register" element={<AuthPage />} />
           <Route path="/user" element={<User/>}/>
+          <Route path="/requests" element={<RequestsPage />} />
           <Route path="/chats" element={<ChatList />} />
           <Route path="/chat/:id" element={<ChatBoard />} />
           <Route path="*" element={<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] text-white">

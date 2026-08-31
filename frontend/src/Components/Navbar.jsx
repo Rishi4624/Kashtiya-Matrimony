@@ -58,15 +58,11 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
 
 
             {isAuthenticated && (
-              <button
-                type="button"
-                onClick={() => setShowRequests((prev) => !prev)}
-                className={[
-                  'relative px-3 py-2 text-sm font-medium transition-all duration-200',
-                  showRequests ? 'text-[#1A1916]' : 'text-[#5C574F] hover:text-[#C4782A]',
-                  'after:absolute after:-bottom-1 after:left-1/2 after:h-[2px] after:w-[calc(100%-0.5rem)] after:-translate-x-1/2 after:rounded-full after:bg-[#C4782A] after:content-[""]',
-                  showRequests ? 'after:opacity-100' : 'after:opacity-0 hover:after:opacity-100',
-                ].join(' ')}
+              <NavLink
+                to="/requests"
+                className={({ isActive }) =>
+                  `${linkClass({ isActive })} hidden sm:inline-flex`
+                }
               >
                 Requests
                 {requestCount > 0 && (
@@ -74,7 +70,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
                     {requestCount}
                   </span>
                 )}
-              </button>
+              </NavLink>
             )}
 
 

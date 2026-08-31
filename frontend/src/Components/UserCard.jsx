@@ -3,7 +3,19 @@ import { addInterest } from '../api/addInterest'
 import default_profile_male from '../assets/default-profile-male.jpg'
 import default_profile_female from '../assets/default-profile-female.jpg'
 
-export default function UserCard({ user, delay = '0ms', onClick }) {
+export default function UserCard({
+  user,
+  delay = '0ms',
+  onClick,
+  showInterestButton = true,
+  showActions = false,
+  primaryActionLabel = 'Accept',
+  onPrimaryAction,
+  primaryActionDisabled = false,
+  secondaryActionLabel = 'Reject',
+  onSecondaryAction,
+  secondaryActionDisabled = false,
+}) {
   const defaultAvatar = user.avatar ? user.avatar : default_profile_male;
   const defaultAvatar_female = user.avatar ? user.avatar : default_profile_female;
 
@@ -12,6 +24,22 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
     const response = await addInterest(user)
     if (response) {
       alert('Interest request has been sent')
+    }
+  }
+
+  const handlePrimaryAction = async (e) => {
+    e.stopPropagation()
+    if (onPrimaryAction) {
+      await onPrimaryAction(user)
+      return
+    }
+    await handleInterest(e)
+  }
+
+  const handleSecondaryAction = async (e) => {
+    e.stopPropagation()
+    if (onSecondaryAction) {
+      await onSecondaryAction(user)
     }
   }
 
@@ -75,18 +103,44 @@ export default function UserCard({ user, delay = '0ms', onClick }) {
         </div>
       </button>
 
-      {/* Show Interest */}
-      <div className="px-4 pb-4">
-        <button
-          onClick={handleInterest}
-          className="w-full rounded-xl bg-[#C4782A] py-2.5 text-sm font-semibold text-white
-                     shadow-sm transition-all duration-200
-                     hover:bg-[#A8651F] hover:shadow-md
-                     active:scale-[0.98]"
-        >
-          Send an interest
-        </button>
-      </div>
+      {(showInterestButton || showActions) && (
+        <div className="px-4 pb-4">
+          {showActions ? (
+            <div className="flex gap-2">
+              <button
+                onClick={handlePrimaryAction}
+                disabled={primaryActionDisabled}
+                className={`flex-1 rounded-xl py-2.5 text-sm font-semibold shadow-sm transition-all duration-200 ${
+                  primaryActionDisabled
+                    ? 'bg-[#C4782A] text-white hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]'
+                    : 'bg-[#C4782A] text-white hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]'
+                }`}
+              >
+                {primaryActionDisabled ? 'Start chat' : primaryActionLabel}
+              </button>
+
+              <button
+                onClick={handleSecondaryAction}
+                disabled={secondaryActionDisabled}
+                className={`flex-1 rounded-xl border border-[#D7CAB8] bg-white py-2.5 text-sm font-semibold text-[#3E362F] shadow-sm transition-all duration-200 ${
+                  secondaryActionDisabled
+                    ? 'cursor-not-allowed opacity-60'
+                    : 'hover:bg-[#F4EAE1] active:scale-[0.98]'
+                }`}
+              >
+                {secondaryActionLabel}
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={handleInterest}
+              className="w-full rounded-xl bg-[#C4782A] py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+            >
+              Send an interest
+            </button>
+          )}
+        </div>
+      )}
     </article>
   )
 }

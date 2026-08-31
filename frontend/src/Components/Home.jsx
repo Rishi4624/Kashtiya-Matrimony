@@ -7,21 +7,23 @@ import heroBackground from '../assets/mission_img1.jpg'
 
 export default function Home() {
     const navigate = useNavigate()
-    const { users } = useAuth()
+    const { users = [] } = useAuth()
+    const safeUsers = Array.isArray(users) ? users : []
+    
     const [filters, setFilters] = useState({
-         gender: '', 
-         minAge: '', 
-         maxAge: '', 
-         religion: '', 
-         motherTongue: '', 
-         location: '', 
-         maritalStatus: '', 
-         education: '', 
-         occupation: '', 
-         diet: '', 
-         smoking: '', 
-         drinking: '' 
-        })
+        gender: '',
+        minAge: '',
+        maxAge: '',
+        religion: '',
+        motherTongue: '',
+        location: '',
+        maritalStatus: '',
+        education: '',
+        occupation: '',
+        diet: '',
+        smoking: '',
+        drinking: ''
+    })
     const [appliedFilters, setAppliedFilters] = useState(filters)
 
     // useEffect(() => {
@@ -49,7 +51,7 @@ export default function Home() {
         setAppliedFilters(emptyFilters)
     }
 
-    const filteredUsers = users.filter((user) => {
+    const filteredUsers = safeUsers.filter((user) => {
         const age = Number(user.age)
         const matchesGender = !appliedFilters.gender || user.gender === appliedFilters.gender
         const matchesMinAge = !appliedFilters.minAge || (age > 0 && age >= Number(appliedFilters.minAge))
@@ -112,7 +114,7 @@ export default function Home() {
             </section>
 
 
-            <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16"><div className="mb-8"><p className="mb-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">Browse</p><h2 className="font-serif text-2xl font-medium text-[#1A1916] sm:text-3xl">Featured profiles</h2><p className="mt-1 text-sm text-[#5C574F]">Showing {filteredUsers.length} of {users.length} profiles</p></div>{users.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">Loading profiles...</div> : filteredUsers.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">No profiles match your search.</div> : <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filteredUsers.map((user, index) => <UserCard key={user.id || user._id || `profile-${index}`} user={user} delay={`${(index + 1) * 0.05}s`} onClick={() => navigate(`/profile/${user.id || user._id}`, { state: { user } })} />)}</div>}</main>
+            <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16"><div className="mb-8"><p className="mb-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">Browse</p><h2 className="font-serif text-2xl font-medium text-[#1A1916] sm:text-3xl">Featured profiles</h2><p className="mt-1 text-sm text-[#5C574F]">Showing {filteredUsers.length} of {safeUsers.length} profiles</p></div>{safeUsers.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">Loading profiles...</div> : filteredUsers.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">No profiles match your search.</div> : <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{filteredUsers.map((user, index) => <UserCard key={user.id || user._id || `profile-${index}`} user={user} delay={`${(index + 1) * 0.05}s`} onClick={() => navigate(`/profile/${user.id || user._id}`, { state: { user } })} />)}</div>}</main>
 
 
 
