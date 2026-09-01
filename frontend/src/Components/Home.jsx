@@ -72,7 +72,7 @@ export default function Home() {
 
     return (
         <div className="min-h-screen bg-[#F7F3EE] font-sans text-[#2C2A26] antialiased">
-            <section className="relative overflow-hidden border-b border-[#E8E0D5]">
+            {/* <section className="relative overflow-hidden border-b border-[#E8E0D5]">
                 <img
                     src={heroBackground}
                     alt="Indian wedding couple"
@@ -111,7 +111,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
             <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-16"><div className="mb-8"><p className="mb-1 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">Browse</p><h2 className="font-serif text-2xl font-medium text-[#1A1916] sm:text-3xl">Featured profiles</h2><p className="mt-1 text-sm text-[#5C574F]">Showing {filteredUsers.length} of {safeUsers.length} profiles</p></div>{safeUsers.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">Loading profiles...</div> : filteredUsers.length === 0 ? <div className="rounded-2xl border border-dashed border-[#E8E0D5] bg-[#FBF8F4] py-16 text-center text-[#5C574F]">No profiles match your search.</div> : <div className="flex flex-col gap-4">

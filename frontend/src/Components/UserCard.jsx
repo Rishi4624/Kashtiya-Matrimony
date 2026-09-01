@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { addInterest } from '../api/addInterest'
 import default_profile_male from '../assets/default-profile-male.jpg'
 import default_profile_female from '../assets/default-profile-female.jpg'
@@ -16,33 +16,34 @@ export default function UserCard({
   onSecondaryAction,
   secondaryActionDisabled = false,
 }) {
+  const [interestSent, setInterestSent] = useState(false)
   const isMale = user?.gender === 'male'
   const defaultAvatar = isMale ? default_profile_male : default_profile_female
   const hasPhoto = Boolean(user?.avatar || user?.image)
 
-  const name = user?.name || 'Profile'
-  const age = user?.age
-  const height = user?.height || '—'
-  const location = user?.location || user?.city || '—'
-  const community = user?.community || user?.caste || user?.religion || '—'
-  const occupation = user?.occupation || '—'
-  const income = user?.income || user?.salary || 'No Income'
-  const education = user?.education || '—'
-  const maritalStatus = user?.maritalStatus || 'Never Married'
-  const photoCount = user?.photoCount || user?.photos?.length || 1
+  const name         = user?.name || 'Profile'
+  const age          = user?.age
+  const height       = user?.height
+  const city         = user?.city || user?.location?.split(',')?.[0]?.trim() || null
+  const location     = user?.location || user?.city || null
+  const gender       = user?.gender
+  const religion     = user?.religion || user?.community || user?.caste || null
+  const motherTongue = user?.motherTongue || null
+  const maritalStatus= user?.maritalStatus || null
+  const education    = user?.education || null
+  const occupation   = user?.occupation || null
+  const income       = user?.income || user?.annualIncome || user?.salary || null
+  const photoCount   = user?.photoCount || user?.photos?.length || 1
 
   const handleInterest = async (e) => {
     e.stopPropagation()
     const response = await addInterest(user)
-    if (response) alert('Interest request has been sent')
+    if (response) { setInterestSent(true); alert('Interest request has been sent') }
   }
 
   const handlePrimaryAction = async (e) => {
     e.stopPropagation()
-    if (onPrimaryAction) {
-      await onPrimaryAction(user)
-      return
-    }
+    if (onPrimaryAction) { await onPrimaryAction(user); return }
     await handleInterest(e)
   }
 
@@ -51,152 +52,199 @@ export default function UserCard({
     if (onSecondaryAction) await onSecondaryAction(user)
   }
 
+  const genderGradient = isMale
+    ? 'from-blue-500/20 to-blue-500/5'
+    : 'from-pink-500/20 to-pink-500/5'
+
+  const genderBadge = isMale
+    ? 'bg-blue-50 text-blue-600 ring-1 ring-blue-100'
+    : 'bg-pink-50 text-pink-600 ring-1 ring-pink-100'
+
+  const details = [
+    city          && { title: 'City',           value: city },
+    religion      && { title: 'Religion',        value: religion },
+    motherTongue  && { title: 'Mother Tongue',   value: motherTongue },
+    maritalStatus && { title: 'Marital Status',  value: maritalStatus },
+    education     && { title: 'Education',       value: education },
+    occupation    && { title: 'Occupation',      value: occupation },
+    income        && { title: 'Annual Income',   value: income },
+    height        && { title: 'Height',          value: height },
+  ].filter(Boolean)
+
   return (
     <article
-      className="group flex overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-md animate-fade-in-up"
+      className="group relative flex overflow-hidden rounded-3xl border border-[#E8E0D5] bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C4782A]/40 hover:shadow-lg"
       style={{ animationDelay: delay }}
     >
-      {/* ========== LEFT: Photo ========== */}
-      <div className="relative w-[140px] flex-shrink-0 overflow-hidden sm:w-[160px]">
-        {hasPhoto ? (
-          <img
-            src={user.avatar || user.image}
-            alt={name}
-            onError={(e) => {
-              e.currentTarget.onerror = null
-              e.currentTarget.src = defaultAvatar
-            }}
-            className="absolute inset-0 h-full w-full object-cover object-top"
-          />
-        ) : (
-          <div className="flex h-full min-h-[180px] w-full flex-col items-center justify-center bg-gradient-to-br from-slate-700 to-slate-900 p-3 text-white">
-            <div className="mb-2 h-12 w-12 rounded-full bg-white/20" />
-            <span className="text-[10px] uppercase tracking-wider text-white/70">No photo</span>
-          </div>
-        )}
+      {/* ─────────────── LEFT: Photo Panel ─────────────── */}
+      <div className="relative w-[220px] shrink-0 overflow-hidden sm:w-[260px]">
 
-        {/* Photo count badge */}
-        <div className="absolute right-2 top-2 flex items-center gap-1 rounded-md bg-black/50 px-1.5 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          {photoCount}
+        {/* Photo */}
+        <img
+          src={hasPhoto ? (user.avatar || user.image) : defaultAvatar}
+          alt={name}
+          onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = defaultAvatar }}
+          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+
+        {/* Gradient overlay bottom */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
+        {/* Top badges */}
+        <div className="absolute left-2.5 top-2.5 flex flex-col gap-1.5">
+          {/* Photo count */}
+          <div className="flex items-center gap-1 rounded-lg bg-black/50 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur-md">
+            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {photoCount}
+          </div>
+        </div>
+
+        {/* Active dot + label */}
+        <div className="absolute right-2.5 top-2.5">
+          <span className="flex items-center gap-1 rounded-full bg-green-500/90 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+            Online
+          </span>
+        </div>
+
+        {/* Bottom: Name on photo */}
+        <div className="absolute bottom-0 left-0 right-0 p-3">
+          <p className="truncate text-sm font-bold text-white drop-shadow">
+            {name}{age ? `, ${age}` : ''}
+          </p>
+          {height && (
+            <p className="text-[11px] text-white/80">{height}</p>
+          )}
         </div>
       </div>
 
-      {/* ========== RIGHT: Content ========== */}
-      <div className="flex flex-1 flex-col">
-        {/* Clickable info area */}
+      {/* ─────────────── RIGHT: Content Panel ─────────────── */}
+      <div className="flex flex-1 flex-col min-w-0">
+
+        {/* Top accent bar */}
+        <div className={`h-1 w-full bg-gradient-to-r ${isMale ? 'from-blue-400 to-blue-200' : 'from-pink-400 to-pink-200'}`} />
+
+        {/* Main clickable info */}
         <button
           onClick={onClick}
-          className="flex flex-1 flex-col px-4 pt-3 pb-2 text-left focus:outline-none"
+          className="flex flex-1 flex-col px-5 pt-4 pb-3 text-left focus:outline-none"
         >
-          {/* Top row: Active Today + badges */}
-          <div className="mb-1 flex items-start justify-between gap-2">
-            <span className="text-xs text-gray-500">Active Today</span>
 
-            <div className="flex flex-wrap items-center justify-end gap-1.5">
+          {/* Header row */}
+          <div className="mb-3 flex items-start justify-between gap-2">
+            <div>
+              <h2 className="text-xl font-bold text-[#1A1916] leading-tight">
+                {name}
+                {age && <span className="ml-1.5 text-lg font-normal text-[#5C574F]">{age}</span>}
+              </h2>
+              {location && (
+                <p className="mt-0.5 flex items-center gap-1 text-xs text-[#A39E96]">
+                  <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  {location}
+                </p>
+              )}
+            </div>
+
+            {/* Gender + New badges */}
+            <div className="flex shrink-0 flex-col items-end gap-1">
+              {gender && (
+                <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize ${genderBadge}`}>
+                  {gender}
+                </span>
+              )}
               {user?.isJustJoined && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-white px-2.5 py-0.5 text-[11px] font-medium text-gray-600">
-                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                  </svg>
-                  Just Joined
-                </span>
-              )}
-              {user?.isPro && (
-                <span className="rounded bg-rose-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
-                  Pro Mini
-                </span>
-              )}
-              {user?.isMostCompatible && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-medium text-rose-500">
-                  <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.834a1 1 0 001.207.97l4.5-1.25A1 1 0 0012 15v-5.667a1 1 0 00-.793-.97l-4.5-1.25A1 1 0 006 10.333z" />
-                  </svg>
-                  Most Compatible
+                <span className="rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-600 ring-1 ring-amber-100">
+                  New ✨
                 </span>
               )}
             </div>
           </div>
 
-          {/* Name + Age */}
-          <h2 className="text-lg font-semibold text-gray-900 sm:text-xl">
-            {name}{age ? `, ${age}` : ''}
-          </h2>
+          {/* Divider */}
+          <div className="mb-3 h-px bg-gradient-to-r from-[#E8E0D5] to-transparent" />
 
-          {/* Height • City • Community */}
-          <p className="mt-0.5 text-sm text-gray-600">
-            {[height, location, community].filter(Boolean).join(' • ')}
-          </p>
-
-          {/* Occupation • Income */}
-          <p className="mt-1.5 flex items-center gap-1.5 text-sm text-gray-700">
-            <span className="text-gray-400">💼</span>
-            {occupation} • {income}
-          </p>
-
-          {/* Education • Marital Status */}
-          <p className="mt-1 flex items-center gap-1.5 text-sm text-gray-700">
-            <span className="text-gray-400">🎓</span>
-            {education}
-            <span className="mx-1 text-gray-300">•</span>
-            <span className="text-gray-400">💍</span>
-            {maritalStatus}
-          </p>
+          {/* Details grid — label / value */}
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+            {details.map(({ title, value }, i) => (
+              <div key={i} className="flex flex-col gap-0.5">
+                <span className="text-[10px] font-semibold uppercase tracking-widest text-[#A39E96]">
+                  {title}
+                </span>
+                <span className="truncate text-sm font-medium text-[#1A1916]">{value}</span>
+              </div>
+            ))}
+          </div>
         </button>
 
-        {/* ========== Action bar ========== */}
+        {/* ── Action Bar ── */}
         {(showInterestButton || showActions) && (
-          <div className="border-t border-rose-50 bg-rose-50/40 px-2 py-2.5">
+          <div className="border-t border-[#F0EBE4] bg-[#FAF7F4] px-4 py-3">
             {showActions ? (
-              <div className="flex gap-2 px-1">
+              <div className="flex gap-2.5">
                 <button
                   onClick={handlePrimaryAction}
                   disabled={primaryActionDisabled}
-                  className="flex-1 rounded-lg bg-[#C4782A] py-2 text-sm font-semibold text-white transition hover:bg-[#A8651F] disabled:opacity-60"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#C4782A] py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#A8651F] hover:shadow-md active:scale-95 disabled:opacity-60"
                 >
-                  {primaryActionDisabled ? 'Start chat' : primaryActionLabel}
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {primaryActionLabel}
                 </button>
                 <button
                   onClick={handleSecondaryAction}
                   disabled={secondaryActionDisabled}
-                  className="flex-1 rounded-lg border border-gray-200 bg-white py-2 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 disabled:opacity-60"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#E8E0D5] bg-white py-2.5 text-sm font-semibold text-[#5C574F] transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-500 active:scale-95 disabled:opacity-60"
                 >
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
                   {secondaryActionLabel}
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-4 gap-1 text-center text-sm font-medium text-rose-500">
+              <div className="flex items-center gap-2">
+                {/* Send Interest — primary */}
                 <button
                   onClick={handleInterest}
-                  className="flex flex-col items-center gap-0.5 rounded-lg py-1.5 transition hover:bg-rose-100"
+                  disabled={interestSent}
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all active:scale-95 ${
+                    interestSent
+                      ? 'bg-[#F2E7DA] text-[#C4782A] cursor-default'
+                      : 'bg-[#C4782A] text-white hover:bg-[#A8651F] shadow-sm hover:shadow-md'
+                  }`}
                 >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12" />
+                  <svg className="h-4 w-4" fill={interestSent ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
-                  <span className="text-[11px]">Interest</span>
+                  {interestSent ? 'Interest Sent' : 'Send Interest'}
                 </button>
 
-                <button className="flex flex-col items-center gap-0.5 rounded-lg py-1.5 transition hover:bg-rose-100">
+                {/* Shortlist */}
+                <button
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#E8E0D5] bg-white text-[#A39E96] transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-500 active:scale-95"
+                  title="Shortlist"
+                >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                   </svg>
-                  <span className="text-[11px]">Shortlist</span>
                 </button>
 
-                <button className="flex flex-col items-center gap-0.5 rounded-lg py-1.5 transition hover:bg-rose-100">
+                {/* Ignore */}
+                <button
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#E8E0D5] bg-white text-[#A39E96] transition hover:border-red-200 hover:bg-red-50 hover:text-red-400 active:scale-95"
+                  title="Ignore"
+                >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                  <span className="text-[11px]">Ignore</span>
-                </button>
-
-                <button className="flex flex-col items-center gap-0.5 rounded-lg py-1.5 transition hover:bg-rose-100">
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                  </svg>
-                  <span className="text-[11px]">Chat</span>
                 </button>
               </div>
             )}
