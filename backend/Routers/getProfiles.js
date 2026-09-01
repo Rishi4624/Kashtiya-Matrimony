@@ -8,9 +8,15 @@ router.get('/', async (req, res) => {
 
         
         const id = req.user.id;
+
+        const gender = req.user.gender;
+        console.log({requser: req.user});
+
+        const owner = await User.findOne({_id: id});
         
         const users = await User.find({
-            _id: {$ne : id}
+            _id: {$ne : id},
+            gender: {$ne: owner.gender}
         }).select('-password');
         
         
