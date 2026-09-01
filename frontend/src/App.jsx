@@ -6,6 +6,7 @@ import AboutUs from './Components/AboutUs'
 import Profile from './Components/Profile'
 import AuthPage from './Components/AuthPage'
 import Navbar from './Components/Navbar'
+import Sidebar from './Components/Sidebar'
 import User from './Components/User'
 import ChatBoard from './Components/ChatBoard'
 import ChatList from './Components/ChatList'
@@ -68,37 +69,41 @@ function App() {
             <Route path="*" element={<Landing />} />
           </Routes>
         </>
-      ) : (<>
-        <Navbar 
-          isAuthenticated={isAuthenticated}
-          setIsAuthenticated={setIsAuthenticated}
-        />
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<AboutUs />} />
-          {/* <Route path="/profile" element={<Profile userData={users} />} /> */}
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/login" element={<AuthPage />} />
-          <Route path="/register" element={<AuthPage />} />
-          <Route path="/user" element={<User/>}/>
-          <Route path="/requests" element={<RequestsPage />} />
-          <Route path="/chats" element={<ChatList />} />
-          <Route path="/chat/:id" element={<ChatBoard />} />
-          <Route path="*" element={<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] text-white">
-            <div className="text-center">
-              <p className="text-slate-400 text-lg mb-4">404 - Page Not Found</p>
-              <button
-                onClick={() => {handleUser}}
-                className="px-5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-violet-500 to-pink-500 hover:from-violet-600 hover:to-pink-600 transition"
-              >
-                Go Home
-              </button>
-            </div>
-          </div>} />
-        </Routes>
-      {/* </div> */}
-      </>)}
+      ) : (
+        <>
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            setIsAuthenticated={setIsAuthenticated}
+          />
+          <Sidebar
+            isAuthenticated={isAuthenticated}
+            setIsAuthenticated={setIsAuthenticated}
+          />
+          {/* Content shifted right by sidebar width */}
+          <div className="ml-60">
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/about" element={<AboutUs />} />
+              {/* <Route path="/profile" element={<Profile userData={users} />} /> */}
+              <Route path="/profile/:id" element={<Profile />} />
+              <Route path="/login" element={<AuthPage />} />
+              <Route path="/register" element={<AuthPage />} />
+              <Route path="/user" element={<User />} />
+              <Route path="/requests" element={<RequestsPage />} />
+              <Route path="/chats" element={<ChatList />} />
+              <Route path="/chat/:id" element={<ChatBoard />} />
+              <Route path="*" element={
+                <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a0a1a] via-[#1a1035] to-[#0f172a] text-white">
+                  <div className="text-center">
+                    <p className="text-slate-400 text-lg mb-4">404 - Page Not Found</p>
+                  </div>
+                </div>
+              } />
+            </Routes>
+          </div>
+        </>
+      )}
       
       </>
     
