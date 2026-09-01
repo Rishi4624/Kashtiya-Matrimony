@@ -206,9 +206,9 @@ export default function User() {
 
   return (
     <div className="min-h-screen bg-[#F7F3EE]">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
+      <div className="mx-auto max-w-6xl px-3 py-6 sm:px-6 sm:py-12">
         {/* Top bar */}
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+        <div className="mb-6 flex flex-col items-start gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A] transition hover:text-[#A8651F]"
@@ -216,11 +216,11 @@ export default function User() {
             ← Back
           </button>
 
-          <div className="flex gap-2">
+          <div className="flex w-full flex-wrap gap-2 sm:w-auto">
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F]"
+                className="w-full rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F] sm:w-auto"
               >
                 Edit profile
               </button>
@@ -228,13 +228,13 @@ export default function User() {
               <>
                 <button
                   onClick={handleCancel}
-                  className="rounded-xl border border-[#E8E0D5] bg-white px-5 py-2.5 text-sm font-semibold text-[#5C574F] transition hover:border-[#C4782A]"
+                  className="w-full rounded-xl border border-[#E8E0D5] bg-white px-5 py-2.5 text-sm font-semibold text-[#5C574F] transition hover:border-[#C4782A] sm:w-auto"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSave}
-                  className="rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F]"
+                  className="w-full rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F] sm:w-auto"
                 >
                   Save
                 </button>
@@ -244,7 +244,7 @@ export default function User() {
         </div>
 
         {/* ========== MAIN LAYOUT ========== */}
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-14">
           {/* LEFT: PHOTO */}
           <div className="lg:col-span-5">
             <div className="overflow-hidden rounded-3xl border border-[#E8E0D5] bg-[#FBF8F4] shadow-sm">
@@ -276,7 +276,7 @@ export default function User() {
 
             {/* Posts under photo */}
             <div className="mt-5">
-              <div className="mb-3 flex items-center justify-between">
+              <div className="mb-3 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#A39E96]">
                   Photos ({displayPosts.length})
                 </p>
@@ -291,7 +291,7 @@ export default function User() {
                 <input ref={postsInputRef} type="file" accept="image/*" multiple onChange={handlePostsUpload} className="hidden" />
               </div>
               {displayPosts.length > 0 ? (
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {displayPosts.map((post, index) => (
                     <div key={index} className="group relative aspect-square overflow-hidden rounded-xl border border-[#E8E0D5] bg-white">
                       <img src={post} alt={`Post ${index + 1}`} className="h-full w-full object-cover" />
@@ -407,9 +407,9 @@ export default function User() {
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row">
                     <input value={hobbyInput} onChange={(e) => setHobbyInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addHobby())} placeholder="Add hobby..." className={inputClass} />
-                    <button type="button" onClick={addHobby} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 text-sm font-medium text-[#C4782A]">Add</button>
+                    <button type="button" onClick={addHobby} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 py-2.5 text-sm font-medium text-[#C4782A] sm:w-auto">Add</button>
                   </div>
                 </div>
 
@@ -424,9 +424,9 @@ export default function User() {
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-col gap-2 sm:flex-row">
                     <input value={interestInput} onChange={(e) => setInterestInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addInterest())} placeholder="Add interest..." className={inputClass} />
-                    <button type="button" onClick={addInterest} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 text-sm font-medium text-[#C4782A]">Add</button>
+                    <button type="button" onClick={addInterest} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 py-2.5 text-sm font-medium text-[#C4782A] sm:w-auto">Add</button>
                   </div>
                 </div>
               </div>
@@ -445,7 +445,7 @@ export default function User() {
                 </p>
 
                 {detailGrid.length > 0 && (
-                  <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[#E8E0D5] pt-6 sm:grid-cols-3">
+                  <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-5 border-t border-[#E8E0D5] pt-6 sm:grid-cols-2 lg:grid-cols-3">
                     {detailGrid.map(({ label, value }) => (
                       <div key={label}>
                         <p className="text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">{label}</p>

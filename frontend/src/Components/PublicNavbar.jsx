@@ -1,54 +1,64 @@
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 export default function PublicNavbar() {
   const navigate = useNavigate()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const closeMenu = () => setMobileMenuOpen(false)
 
   const linkClass = ({ isActive }) =>
     [
       'relative inline-flex items-center px-3 py-2 text-sm font-medium transition-all duration-200',
       isActive ? 'text-[#1A1916]' : 'text-[#5C574F] hover:text-[#C4782A]',
-      // underline base
       'after:absolute after:-bottom-1 after:left-1/2 after:h-[2px] after:w-[calc(100%-0.5rem)] after:-translate-x-1/2 after:rounded-full after:bg-[#C4782A] after:content-[""]',
-      // show underline when active, or on hover when inactive
       isActive ? 'after:opacity-100' : 'after:opacity-0 hover:after:opacity-100',
     ].join(' ')
 
   return (
     <nav className="sticky top-0 z-50 border-b border-[#E8E0D5] bg-[#FBF8F4]/95 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="flex items-center gap-3 sm:gap-5">
-            {/* Pass the function directly — do NOT wrap it in a template string */}
-            <NavLink to="/" className={linkClass} end>
-              Discover
-            </NavLink>
-
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                `${linkClass({ isActive })} hidden sm:inline-flex`
-              }
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              onClick={() => setMobileMenuOpen((value) => !value)}
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E8E0D5] bg-[#F8F2EB] text-[#1A1916] shadow-sm transition hover:border-[#C4782A] hover:text-[#C4782A] lg:hidden"
             >
-              About Us
-            </NavLink>
+              <span className="flex flex-col items-center justify-center gap-1.5">
+                <span className="block h-0.5 w-5 rounded-full bg-current" />
+                <span className="block h-0.5 w-5 rounded-full bg-current" />
+                <span className="block h-0.5 w-5 rounded-full bg-current" />
+              </span>
+            </button>
 
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                `${linkClass({ isActive })} hidden md:inline-flex`
-              }
-            >
-              Contact
-            </NavLink>
+            <div className="hidden items-center gap-3 sm:gap-5 lg:flex">
+              <NavLink to="/" className={linkClass} end>
+                Discover
+              </NavLink>
 
-            <NavLink
-              to="/pricing"
-              className={({ isActive }) =>
-                `${linkClass({ isActive })} hidden md:inline-flex`
-              }
-            >
-              Pricing
-            </NavLink>
+              <NavLink
+                to="/about"
+                className={({ isActive }) => `${linkClass({ isActive })} hidden sm:inline-flex`}
+              >
+                About Us
+              </NavLink>
+
+              <NavLink
+                to="/contact"
+                className={({ isActive }) => `${linkClass({ isActive })} hidden md:inline-flex`}
+              >
+                Contact
+              </NavLink>
+
+              <NavLink
+                to="/pricing"
+                className={({ isActive }) => `${linkClass({ isActive })} hidden md:inline-flex`}
+              >
+                Pricing
+              </NavLink>
+            </div>
           </div>
 
           <NavLink
@@ -67,7 +77,7 @@ export default function PublicNavbar() {
             <button
               type="button"
               onClick={() => navigate('/login')}
-              className="px-3 py-2 text-sm font-medium text-[#5C574F] transition-colors hover:text-[#C4782A]"
+              className="hidden px-3 py-2 text-sm font-medium text-[#5C574F] transition-colors hover:text-[#C4782A] sm:inline-flex"
             >
               Login
             </button>
@@ -80,6 +90,36 @@ export default function PublicNavbar() {
             </button>
           </div>
         </div>
+
+        {mobileMenuOpen && (
+          <div className="absolute left-3 top-[calc(100%+0.5rem)] z-50 w-[220px] rounded-2xl border border-[#E8E0D5] bg-[#FBF8F4] p-3 shadow-xl shadow-[#C4782A]/10 lg:hidden">
+            <div className="flex flex-col gap-1">
+              <NavLink to="/" onClick={closeMenu} className={({ isActive }) => `rounded-xl px-3 py-2 text-sm font-medium ${isActive ? 'bg-[#F1E6D9] text-[#1A1916]' : 'text-[#5C574F] hover:bg-[#F5F1EA]'}`} end>
+                Discover
+              </NavLink>
+
+              <NavLink to="/about" onClick={closeMenu} className={({ isActive }) => `rounded-xl px-3 py-2 text-sm font-medium ${isActive ? 'bg-[#F1E6D9] text-[#1A1916]' : 'text-[#5C574F] hover:bg-[#F5F1EA]'}`}>
+                About Us
+              </NavLink>
+
+              <NavLink to="/contact" onClick={closeMenu} className={({ isActive }) => `rounded-xl px-3 py-2 text-sm font-medium ${isActive ? 'bg-[#F1E6D9] text-[#1A1916]' : 'text-[#5C574F] hover:bg-[#F5F1EA]'}`}>
+                Contact
+              </NavLink>
+
+              <NavLink to="/pricing" onClick={closeMenu} className={({ isActive }) => `rounded-xl px-3 py-2 text-sm font-medium ${isActive ? 'bg-[#F1E6D9] text-[#1A1916]' : 'text-[#5C574F] hover:bg-[#F5F1EA]'}`}>
+                Pricing
+              </NavLink>
+
+              <button type="button" onClick={() => { navigate('/login'); closeMenu(); }} className="mt-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-[#5C574F] hover:bg-[#F5F1EA]">
+                Login
+              </button>
+
+              <button type="button" onClick={() => { navigate('/register'); closeMenu(); }} className="rounded-xl bg-[#C4782A] px-3 py-2 text-left text-sm font-semibold text-white shadow-sm hover:bg-[#A8651F]">
+                Register
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   )
