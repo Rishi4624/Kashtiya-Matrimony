@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../api/login'
 import { registerUser } from '../api/register'
 import { useAuth } from '../contex/AuthContex.jsx'
+import getProfiles from '../api/getProfiles'
 import mission_img2 from '../assets/mission_img2.jpg'
 
 const profileSteps = [
@@ -26,7 +27,7 @@ const profileSteps = [
 
 export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) {
   const navigate = useNavigate()
-  const { setUser } = useAuth()
+  const { setUser, setUsers } = useAuth()
   const [isLogin, setIsLogin] = useState(initialMode !== 'register')
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -56,12 +57,18 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
     const response = await loginUser(loginData.email, loginData.password)
+    console.log('Login response:', response);
     if (response.success === true) {
       setUser(response.user)
-      setIsAuthenticated(true)
+      // setIsAuthenticated(true)
+      const profilesResponse = await getProfiles()
+      if (Array.isArray(profilesResponse)) {
+        setUsers(profilesResponse)
+      }
       navigate('/home')
+    } else {
+      alert(response.message)
     }
-    alert(response.message)
   }
 
   const validateProfileStep = () => {
