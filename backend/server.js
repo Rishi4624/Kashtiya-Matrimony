@@ -68,6 +68,7 @@ app.use('/api/get-profiles', Auth, require('./Routers/getProfiles'));
 app.use('/api/add-interest', Auth, require('./Routers/addInterest'));
 app.use('/api/accept-interest', Auth, require('./Routers/acceptInterest'));
 app.use('/api/reject-interest', Auth, require('./Routers/rejectInterest'));
+app.use('/api/shortlist', Auth, require('./Routers/toggleShortlist'));
 
 const getRoomId = (firstUserId, secondUserId) => [String(firstUserId), String(secondUserId)].sort().join(':');
 

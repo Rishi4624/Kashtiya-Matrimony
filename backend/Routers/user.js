@@ -7,7 +7,8 @@ const user = async (req, res) => {
         const user = await User.findById(id)
             .select('-password')
             .populate('likes', '-password')
-            .populate('acceptedChats', '-password');
+            .populate('acceptedChats', '-password')
+            .populate('shortlisted', '-password');
         if(!user){
             return res.status(404).json({message: "No User found", success: false});
         }
