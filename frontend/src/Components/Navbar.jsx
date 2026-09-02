@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contex/AuthContex.jsx'
 import logoutUser from '../api/logout.js'
@@ -72,7 +72,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
 
                   {/* Red badge */}
                   {notificationCount > 0 && (
-                    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm">
+                    <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-800 text-[10px] font-bold text-white shadow-sm">
                       {notificationCount > 9 ? '9+' : notificationCount}
                     </span>
                   )}
@@ -91,7 +91,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
                       <div className="flex items-center justify-between border-b border-[#FECDD3] px-4 py-3">
                         <p className="text-sm font-semibold text-[#1C1917]">Notifications</p>
                         {notificationCount > 0 && (
-                          <span className="rounded-full bg-[#FFE4E6] px-2 py-0.5 text-[10px] font-bold text-[#7A4C1F]">
+                          <span className="rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-bold text-white">
                             {notificationCount} new
                           </span>
                         )}
@@ -116,7 +116,7 @@ export default function Navbar({ isAuthenticated, setIsAuthenticated }) {
                                 navigate(`/profile/${n.id}`)
                                 setShowNotifications(false)
                               }}
-                              className="flex w-full items-center gap-3 border-b border-[#F5F1EA] px-4 py-3 text-left transition hover:bg-[#FFF8F8] last:border-b-0"
+                              className="flex w-full items-center gap-3 border-b border-[#FFF5F5] px-4 py-3 text-left transition hover:bg-[#FFF5F5] last:border-b-0"
                             >
                               {/* Avatar */}
                               <div className="relative shrink-0">

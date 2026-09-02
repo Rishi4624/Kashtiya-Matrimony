@@ -1,5 +1,5 @@
-﻿import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../contex/AuthContex.jsx'
 import UserCard from './UserCard'
 import FilterSidebar, {
@@ -13,6 +13,7 @@ import getUsers from '../api/getProfiles.js'
 
 export default function Home() {
     const navigate = useNavigate()
+    const location = useLocation()
     const { users = [], setUsers } = useAuth()
     const safeUsers = Array.isArray(users) ? users : []
 
@@ -37,6 +38,15 @@ export default function Home() {
             })
         }
     }, [])
+
+    // Open filter if navigated with openFilter state
+    useEffect(() => {
+        if (location.state?.openFilter) {
+            setSidebarOpen(true)
+            // Clear the state so it doesn't reopen on reload
+            navigate('/home', { replace: true, state: {} })
+        }
+    }, [location.state, navigate])
 
     // ── Filter handlers ──────────────────────────────────────────────────────
     const updateFilter = (name, value) =>

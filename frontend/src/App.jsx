@@ -14,6 +14,7 @@ import Landing from './Components/LandingPage'
 import PublicNavbar from './Components/PublicNavbar'
 import PublicInfo from './Components/PublicInfo'
 import RequestsPage from './Components/RequestsPage.jsx'
+import Shortlist from './Components/Shortlist.jsx'
 import { useAuth } from './contex/AuthContex.jsx'
 import './App.css'
 
@@ -92,6 +93,7 @@ function App() {
               <Route path="/register" element={<AuthPage />} />
               <Route path="/user" element={<User />} />
               <Route path="/requests" element={<RequestsPage />} />
+              <Route path="/shortlist" element={<Shortlist />} />
               <Route path="/chats" element={<ChatList />} />
               <Route path="/chat/:id" element={<ChatBoard />} />
               <Route path="*" element={

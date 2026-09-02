@@ -130,7 +130,7 @@ export default function RequestsPage() {
         </div>
 
         {/* Tabs */}
-        <div className="mb-6 inline-flex rounded-full border border-[#FECDD3] bg-[#FFF8F8] p-1 shadow-sm">
+        <div className="mb-6 inline-flex rounded-full border border-[#FECDD3] bg-red-800 p-1 shadow-sm text-white">
           {[
             { key: 'requests', label: 'Requests', count: pendingUsers.length },
             { key: 'history', label: 'Accepted', count: acceptedUsers.length },
@@ -139,7 +139,7 @@ export default function RequestsPage() {
               key={tab.key}
               type="button"
               onClick={() => setActiveTab(tab.key)}
-              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm text-white font-semibold transition-all ${
                 activeTab === tab.key
                   ? 'bg-[#1C1917] text-white shadow-sm'
                   : 'text-[#5C574F] hover:text-[#1C1917]'
