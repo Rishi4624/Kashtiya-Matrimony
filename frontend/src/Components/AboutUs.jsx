@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import hero_bg from '../assets/hero_bg.jpg'
 import mission_img2 from '../assets/mission_img (2).jpg'
 import mission_img from '../assets/mission_img.jpg'
@@ -10,27 +10,27 @@ const CTA_BG =mission_img
 
 export default function AboutUs() {
   return (
-    <div className="min-h-screen bg-[#F7F3EE] text-[#2C2A26]">
+    <div className="min-h-screen bg-[#FFF5F5] text-[#2C2A26]">
       {/* ========== HERO (wedding background) ========== */}
-      <section className="relative overflow-hidden border-b border-[#E8E0D5]">
+      <section className="relative overflow-hidden border-b border-[#FECDD3]">
         <div className="absolute inset-0">
           <img
             src={HERO_BG}
             alt="Indian wedding couple"
             className="h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1A120B]/75 via-[#1A120B]/55 to-[#F7F3EE]" />
-          <div className="absolute inset-0 bg-[#1A120B]/25" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1C1917]/75 via-[#1C1917]/55 to-[#FFF5F5]" />
+          <div className="absolute inset-0 bg-[#1C1917]/25" />
         </div>
 
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 py-24 sm:py-32 text-center">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#E8A85C]">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#F87171]">
             About Kashtiya Matrimony
           </p>
           <h1 className="mb-6 font-serif text-4xl sm:text-5xl md:text-[3.25rem] font-medium leading-tight text-white">
             Marriage, arranged
             <br />
-            with <span className="italic text-[#E8A85C]">intention.</span>
+            with <span className="italic text-[#F87171]">intention.</span>
           </h1>
           <p className="mx-auto max-w-xl text-base sm:text-lg leading-relaxed text-[#E8D9C8]/95">
             A calm, family-first way to meet. Verified profiles, community
@@ -48,7 +48,7 @@ export default function AboutUs() {
               alt="Happy Indian wedding couple"
               className="h-full min-h-[300px] w-full object-cover aspect-[4/5] sm:aspect-[5/4] lg:aspect-auto lg:min-h-[420px]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1A120B]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1C1917]/40 to-transparent" />
             <div className="absolute bottom-5 left-5 right-5">
               <p className="text-sm font-medium text-white/90">
                 Real families. Real introductions.
@@ -57,10 +57,10 @@ export default function AboutUs() {
           </div>
 
           <div className="order-1 lg:order-2">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C]">
               Our Mission
             </p>
-            <h2 className="mb-6 font-serif text-2xl sm:text-3xl font-medium text-[#1A1916] leading-snug">
+            <h2 className="mb-6 font-serif text-2xl sm:text-3xl font-medium text-[#1C1917] leading-snug">
               Helping you find a life partner with purpose
             </h2>
             <p className="mb-5 text-base leading-relaxed text-[#5C574F]">
@@ -78,21 +78,21 @@ export default function AboutUs() {
       </section>
 
       {/* ========== WHAT WE BELIEVE ========== */}
-      <section className="relative border-y border-[#E8E0D5] bg-[#FBF8F4] py-16 sm:py-20 overflow-hidden">
+      <section className="relative border-y border-[#FECDD3] bg-[#FFF8F8] py-16 sm:py-20 overflow-hidden">
         {/* soft decorative wash */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4782A'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23B91C1C'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         />
 
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6">
           <div className="mb-12 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C]">
               Principles
             </p>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#1A1916]">
+            <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#1C1917]">
               What we believe
             </h2>
             <p className="mt-2 text-[#5C574F]">The values that guide everything we do</p>
@@ -118,14 +118,14 @@ export default function AboutUs() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="rounded-2xl border border-[#E8E0D5] bg-white p-6 sm:p-7
-                           transition-all duration-300 hover:border-[#D4A574] hover:shadow-md"
+                className="rounded-2xl border border-[#FECDD3] bg-white p-6 sm:p-7
+                           transition-all duration-300 hover:border-[#FCA5A5] hover:shadow-md"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#C4782A]/10 text-xl">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-[#B91C1C]/10 text-xl">
                   {item.icon}
                 </div>
-                <div className="mb-3 h-1 w-10 rounded-full bg-[#C4782A]" />
-                <h3 className="mb-3 font-serif text-xl font-medium text-[#1A1916]">
+                <div className="mb-3 h-1 w-10 rounded-full bg-[#B91C1C]" />
+                <h3 className="mb-3 font-serif text-xl font-medium text-[#1C1917]">
                   {item.title}
                 </h3>
                 <p className="text-sm leading-relaxed text-[#5C574F]">{item.desc}</p>
@@ -138,10 +138,10 @@ export default function AboutUs() {
       {/* ========== WHY CHOOSE US ========== */}
       <section className="mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20">
         <div className="mb-12 text-center">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C]">
             Why us
           </p>
-          <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#1A1916]">
+          <h2 className="font-serif text-2xl sm:text-3xl font-medium text-[#1C1917]">
             Why choose Kashtiya Matrimony?
           </h2>
           <p className="mt-2 text-[#5C574F]">Built for people who are serious about marriage</p>
@@ -168,16 +168,16 @@ export default function AboutUs() {
           ].map((item) => (
             <div
               key={item.title}
-              className="flex gap-4 rounded-2xl border border-[#E8E0D5] bg-white p-5 sm:p-6
-                         transition-colors hover:border-[#D4A574]"
+              className="flex gap-4 rounded-2xl border border-[#FECDD3] bg-white p-5 sm:p-6
+                         transition-colors hover:border-[#FCA5A5]"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#C4782A]/10 text-[#C4782A]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#B91C1C]/10 text-[#B91C1C]">
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <div>
-                <h3 className="mb-1 font-semibold text-[#1A1916]">{item.title}</h3>
+                <h3 className="mb-1 font-semibold text-[#1C1917]">{item.title}</h3>
                 <p className="text-sm leading-relaxed text-[#5C574F]">{item.desc}</p>
               </div>
             </div>
@@ -186,7 +186,7 @@ export default function AboutUs() {
       </section>
 
       {/* ========== STATS ========== */}
-      <section className="border-y border-[#E8E0D5] bg-[#1A1916] py-14 sm:py-16">
+      <section className="border-y border-[#FECDD3] bg-[#1C1917] py-14 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 text-center">
             {[
@@ -196,7 +196,7 @@ export default function AboutUs() {
               { value: '40+', label: 'Screening checks' },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="font-serif text-3xl sm:text-4xl font-medium text-[#C4782A]">
+                <p className="font-serif text-3xl sm:text-4xl font-medium text-[#B91C1C]">
                   {stat.value}
                 </p>
                 <p className="mt-1 text-sm text-[#A39E96]">{stat.label}</p>
@@ -214,7 +214,7 @@ export default function AboutUs() {
             alt=""
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-[#1A120B]/80" />
+          <div className="absolute inset-0 bg-[#1C1917]/80" />
         </div>
 
         <div className="relative mx-auto max-w-2xl px-4 sm:px-6 text-center">
@@ -226,9 +226,9 @@ export default function AboutUs() {
           </p>
           <a
             href="/register"
-            className="inline-block rounded-xl bg-[#C4782A] px-8 py-3.5 text-sm font-semibold text-white
-                       shadow-lg shadow-[#C4782A]/30 transition-all duration-200
-                       hover:bg-[#A8651F] hover:shadow-xl active:scale-[0.98]"
+            className="inline-block rounded-xl bg-[#B91C1C] px-8 py-3.5 text-sm font-semibold text-white
+                       shadow-lg shadow-[#B91C1C]/30 transition-all duration-200
+                       hover:bg-[#991B1B] hover:shadow-xl active:scale-[0.98]"
           >
             Register Free
           </a>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../api/login'
 import { registerUser } from '../api/register'
@@ -152,10 +152,10 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
   }
 
   const inputClass =
-    'w-full pl-11 pr-4 py-3 rounded-xl text-sm text-[#2C2A26] placeholder-[#A39E96] bg-[#FBF8F4] border border-[#E8E0D5] focus:border-[#C4782A] focus:ring-2 focus:ring-[#C4782A]/20 focus:outline-none transition-all duration-200'
+    'w-full pl-11 pr-4 py-3 rounded-xl text-sm text-[#2C2A26] placeholder-[#A39E96] bg-[#FFF8F8] border border-[#FECDD3] focus:border-[#B91C1C] focus:ring-2 focus:ring-[#B91C1C]/20 focus:outline-none transition-all duration-200'
 
   const selectClass =
-    'w-full px-4 py-3 rounded-xl text-sm text-[#2C2A26] bg-[#FBF8F4] border border-[#E8E0D5] focus:border-[#C4782A] focus:ring-2 focus:ring-[#C4782A]/20 focus:outline-none transition-all duration-200'
+    'w-full px-4 py-3 rounded-xl text-sm text-[#2C2A26] bg-[#FFF8F8] border border-[#FECDD3] focus:border-[#B91C1C] focus:ring-2 focus:ring-[#B91C1C]/20 focus:outline-none transition-all duration-200'
 
   const renderProfileStep = () => {
     switch (currentStep) {
@@ -254,21 +254,21 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
   return (
     <div
-      className="relative min-h-[calc(100vh-72px)] overflow-hidden bg-[#F7F3EE] font-sans text-[#2C2A26] antialiased"
+      className="relative min-h-[calc(100vh-72px)] overflow-hidden bg-[#FFF5F5] font-sans text-[#2C2A26] antialiased"
       style={{
         backgroundImage: mission_img2,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      <div className="absolute inset-0 bg-[#f7f3ee]/70 backdrop-blur-[1px]" />
+      <div className="absolute inset-0 bg-[#FFF5F5]/70 backdrop-blur-[1px]" />
       <div className="relative z-10 flex min-h-[calc(100vh-72px)] items-center justify-center px-4 py-10">
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#C4782A]">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#B91C1C]">
               Kashtiya Matrimony
             </p>
-            <h1 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#1A1916]">
+            <h1 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#1C1917]">
               {isLogin ? 'Welcome back' : showProfileSetup ? 'Complete your profile' : 'Create account'}
             </h1>
             <p className="mt-2 text-sm text-[#5C574F]">
@@ -280,13 +280,13 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
             </p>
           </div>
 
-          <div className="rounded-3xl border border-[#E8E0D5] bg-[#FBF8F4] p-6 sm:p-8 shadow-sm">
+          <div className="rounded-3xl border border-[#FECDD3] bg-[#FFF8F8] p-6 sm:p-8 shadow-sm">
             {!isLogin && !showProfileSetup && (
-              <div className="mb-7 flex rounded-xl border border-[#E8E0D5] bg-white p-1">
+              <div className="mb-7 flex rounded-xl border border-[#FECDD3] bg-white p-1">
                 <button
                   onClick={() => setIsLogin(true)}
                   className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
-                    isLogin ? 'bg-[#C4782A] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1A1916]'
+                    isLogin ? 'bg-[#B91C1C] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1C1917]'
                   }`}
                 >
                   Login
@@ -294,7 +294,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                 <button
                   onClick={() => setIsLogin(false)}
                   className={`flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all duration-200 ${
-                    !isLogin ? 'bg-[#C4782A] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1A1916]'
+                    !isLogin ? 'bg-[#B91C1C] text-white shadow-sm' : 'text-[#5C574F] hover:text-[#1C1917]'
                   }`}
                 >
                   Register
@@ -326,7 +326,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                 <div>
                   <div className="mb-1.5 flex items-center justify-between">
                     <label className="block text-sm font-medium text-[#2C2A26]">Password</label>
-                    <a href="#" className="text-xs text-[#C4782A] hover:text-[#A8651F] transition">
+                    <a href="#" className="text-xs text-[#B91C1C] hover:text-[#991B1B] transition">
                       Forgot password?
                     </a>
                   </div>
@@ -369,7 +369,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                     id="remember"
                     checked={loginData.remember}
                     onChange={(e) => setLoginData({ ...loginData, remember: e.target.checked })}
-                    className="h-4 w-4 cursor-pointer rounded accent-[#C4782A]"
+                    className="h-4 w-4 cursor-pointer rounded accent-[#B91C1C]"
                   />
                   <label htmlFor="remember" className="cursor-pointer text-sm text-[#5C574F]">
                     Remember me
@@ -378,7 +378,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+                  className="w-full rounded-xl bg-[#B91C1C] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#991B1B] hover:shadow-md active:scale-[0.98]"
                 >
                   Sign In
                 </button>
@@ -394,11 +394,11 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                   </div>
                   <div className="mb-5 h-2 w-full rounded-full bg-[#EEE5DA]">
                     <div
-                      className="h-2 rounded-full bg-[#C4782A] transition-all duration-200"
+                      className="h-2 rounded-full bg-[#B91C1C] transition-all duration-200"
                       style={{ width: `${((currentStep + 1) / profileSteps.length) * 100}%` }}
                     />
                   </div>
-                  <h2 className="text-xl font-semibold text-[#1A1916]">{profileSteps[currentStep].title}</h2>
+                  <h2 className="text-xl font-semibold text-[#1C1917]">{profileSteps[currentStep].title}</h2>
                   <p className="mt-1 text-sm text-[#5C574F]">{profileSteps[currentStep].subtitle}</p>
                 </div>
 
@@ -409,7 +409,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                     type="button"
                     onClick={() => setCurrentStep((step) => Math.max(0, step - 1))}
                     disabled={currentStep === 0}
-                    className="flex-1 rounded-xl border border-[#E8E0D5] bg-white py-3 text-sm font-semibold text-[#2C2A26] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="flex-1 rounded-xl border border-[#FECDD3] bg-white py-3 text-sm font-semibold text-[#2C2A26] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Back
                   </button>
@@ -417,7 +417,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                     type="button"
                     onClick={handleProfileSubmit}
                     disabled={isSubmitting}
-                    className="flex-1 rounded-xl bg-[#C4782A] py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex-1 rounded-xl bg-[#B91C1C] py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#991B1B] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {isSubmitting ? 'Saving...' : currentStep === profileSteps.length - 1 ? 'Finish' : 'Next'}
                   </button>
@@ -577,15 +577,15 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
                     required
                     checked={registerData.terms}
                     onChange={(e) => setRegisterData({ ...registerData, terms: e.target.checked })}
-                    className="mt-0.5 h-4 w-4 cursor-pointer rounded accent-[#C4782A]"
+                    className="mt-0.5 h-4 w-4 cursor-pointer rounded accent-[#B91C1C]"
                   />
                   <label htmlFor="terms" className="cursor-pointer text-sm text-[#5C574F]">
                     I agree to the{' '}
-                    <a href="#" className="text-[#C4782A] hover:text-[#A8651F]">
+                    <a href="#" className="text-[#B91C1C] hover:text-[#991B1B]">
                       Terms of Service
                     </a>{' '}
                     and{' '}
-                    <a href="#" className="text-[#C4782A] hover:text-[#A8651F]">
+                    <a href="#" className="text-[#B91C1C] hover:text-[#991B1B]">
                       Privacy Policy
                     </a>
                   </label>
@@ -593,7 +593,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-[#C4782A] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+                  className="w-full rounded-xl bg-[#B91C1C] py-3.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#991B1B] hover:shadow-md active:scale-[0.98]"
                 >
                   Continue profile setup
                 </button>

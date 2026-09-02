@@ -1,5 +1,5 @@
 import { StrictMode, useEffect, useState } from 'react';
-import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Routes, useNavigate, Navigate } from 'react-router-dom'
 import axios from 'axios';
 import Home from './Components/Home'
 import AboutUs from './Components/AboutUs'
@@ -82,7 +82,8 @@ function App() {
           {/* Content shifted right by sidebar width */}
           <div className="ml-60">
             <Routes>
-              <Route path="/" element={<Landing />} />
+               <Route path="/pricing" element={<PublicInfo type="pricing" />} />
+              <Route path="/" element={<Navigate to="/home" replace />} />
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<AboutUs />} />
               {/* <Route path="/profile" element={<Profile userData={users} />} /> */}

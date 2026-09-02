@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { addInterest } from '../api/addInterest'
 import default_profile_male from '../assets/default-profile-male.jpg'
 import default_profile_female from '../assets/default-profile-female.jpg'
@@ -73,7 +73,7 @@ export default function UserCard({
 
   return (
     <article
-      className="group relative flex overflow-hidden rounded-3xl border border-[#E8E0D5] bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C4782A]/40 hover:shadow-lg"
+      className="group relative flex overflow-hidden rounded-3xl border border-[#FECDD3] bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#B91C1C]/40 hover:shadow-lg"
       style={{ animationDelay: delay }}
     >
       {/* ─────────────── LEFT: Photo Panel ─────────────── */}
@@ -135,7 +135,7 @@ export default function UserCard({
           {/* Header row */}
           <div className="mb-3 flex items-start justify-between gap-2">
             <div>
-              <h2 className="text-xl font-bold text-[#1A1916] leading-tight">
+              <h2 className="text-xl font-bold text-[#1C1917] leading-tight">
                 {name}
                 {age && <span className="ml-1.5 text-lg font-normal text-[#5C574F]">{age}</span>}
               </h2>
@@ -166,7 +166,7 @@ export default function UserCard({
           </div>
 
           {/* Divider */}
-          <div className="mb-3 h-px bg-gradient-to-r from-[#E8E0D5] to-transparent" />
+          <div className="mb-3 h-px bg-gradient-to-r from-[#FECDD3] to-transparent" />
 
           {/* Details grid — label / value */}
           <div className="grid grid-cols-2 gap-x-6 gap-y-3">
@@ -175,7 +175,7 @@ export default function UserCard({
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[#A39E96]">
                   {title}
                 </span>
-                <span className="truncate text-sm font-medium text-[#1A1916]">{value}</span>
+                <span className="truncate text-sm font-medium text-[#1C1917]">{value}</span>
               </div>
             ))}
           </div>
@@ -183,13 +183,13 @@ export default function UserCard({
 
         {/* ── Action Bar ── */}
         {(showInterestButton || showActions) && (
-          <div className="border-t border-[#F0EBE4] bg-[#FAF7F4] px-4 py-3">
+          <div className="border-t border-[#FFE4E6] bg-[#FFF8F8] px-4 py-3">
             {showActions ? (
               <div className="flex gap-2.5">
                 <button
                   onClick={handlePrimaryAction}
                   disabled={primaryActionDisabled}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#C4782A] py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#A8651F] hover:shadow-md active:scale-95 disabled:opacity-60"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#B91C1C] py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-[#991B1B] hover:shadow-md active:scale-95 disabled:opacity-60"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
@@ -199,7 +199,7 @@ export default function UserCard({
                 <button
                   onClick={handleSecondaryAction}
                   disabled={secondaryActionDisabled}
-                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#E8E0D5] bg-white py-2.5 text-sm font-semibold text-[#5C574F] transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-500 active:scale-95 disabled:opacity-60"
+                  className="flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-[#FECDD3] bg-white py-2.5 text-sm font-semibold text-[#5C574F] transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-500 active:scale-95 disabled:opacity-60"
                 >
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
@@ -215,8 +215,8 @@ export default function UserCard({
                   disabled={interestSent}
                   className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all active:scale-95 ${
                     interestSent
-                      ? 'bg-[#F2E7DA] text-[#C4782A] cursor-default'
-                      : 'bg-[#C4782A] text-white hover:bg-[#A8651F] shadow-sm hover:shadow-md'
+                      ? 'bg-[#FFE4E6] text-[#B91C1C] cursor-default'
+                      : 'bg-[#B91C1C] text-white hover:bg-[#991B1B] shadow-sm hover:shadow-md'
                   }`}
                 >
                   <svg className="h-4 w-4" fill={interestSent ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
@@ -228,7 +228,7 @@ export default function UserCard({
                 {/* Shortlist */}
                 <button
                   onClick={(e) => e.stopPropagation()}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#E8E0D5] bg-white text-[#A39E96] transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-500 active:scale-95"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#FECDD3] bg-white text-[#A39E96] transition hover:border-amber-300 hover:bg-amber-50 hover:text-amber-500 active:scale-95"
                   title="Shortlist"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -239,7 +239,7 @@ export default function UserCard({
                 {/* Ignore */}
                 <button
                   onClick={(e) => e.stopPropagation()}
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#E8E0D5] bg-white text-[#A39E96] transition hover:border-red-200 hover:bg-red-50 hover:text-red-400 active:scale-95"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#FECDD3] bg-white text-[#A39E96] transition hover:border-red-200 hover:bg-red-50 hover:text-red-400 active:scale-95"
                   title="Ignore"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { addInterest } from '../api/addInterest'
 
@@ -14,12 +14,12 @@ export default function Profile() {
 
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F3EE]">
+      <div className="flex min-h-screen items-center justify-center bg-[#FFF5F5]">
         <div className="text-center">
           <p className="mb-4 text-lg text-[#5C574F]">User not found</p>
           <button
             onClick={() => navigate('/')}
-            className="rounded-xl bg-[#C4782A] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#A8651F]"
+            className="rounded-xl bg-[#B91C1C] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#991B1B]"
           >
             Go Home
           </button>
@@ -54,12 +54,12 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F3EE]">
+    <div className="min-h-screen bg-[#FFF5F5]">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 sm:py-12">
         {/* Back */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-8 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A] transition hover:text-[#A8651F]"
+          className="mb-8 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C] transition hover:text-[#991B1B]"
         >
           ← All profiles
         </button>
@@ -68,8 +68,8 @@ export default function Profile() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           {/* ========== LEFT: PHOTO ========== */}
           <div className="lg:col-span-5">
-            <div className="overflow-hidden rounded-3xl border border-[#E8E0D5] bg-[#FBF8F4] shadow-sm">
-              <div className="aspect-[4/5] overflow-hidden bg-[#E8E0D5]">
+            <div className="overflow-hidden rounded-3xl border border-[#FECDD3] bg-[#FFF8F8] shadow-sm">
+              <div className="aspect-[4/5] overflow-hidden bg-[#FECDD3]">
                 <img
                   src={user.image || user.avatar || 'https://via.placeholder.com/600x750'}
                   alt={user.name}
@@ -92,7 +92,7 @@ export default function Profile() {
                   {posts.slice(0, 6).map((post, index) => (
                     <div
                       key={index}
-                      className="aspect-square overflow-hidden rounded-xl border border-[#E8E0D5] bg-white"
+                      className="aspect-square overflow-hidden rounded-xl border border-[#FECDD3] bg-white"
                     >
                       <img src={post} alt={`Post ${index + 1}`} className="h-full w-full object-cover" />
                     </div>
@@ -105,12 +105,12 @@ export default function Profile() {
           {/* ========== RIGHT: DETAILS ========== */}
           <div className="lg:col-span-7">
             {/* Community · City */}
-            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C]">
               {[user.religion, user.location].filter(Boolean).join(' · ') || 'Profile'}
             </p>
 
             {/* Name */}
-            <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#1A1916]">
+            <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#1C1917]">
               {user.name}
             </h1>
 
@@ -126,13 +126,13 @@ export default function Profile() {
 
             {/* Detail grid */}
             {detailGrid.length > 0 && (
-              <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-3 border-t border-[#E8E0D5] pt-6">
+              <div className="mt-8 grid grid-cols-2 gap-x-8 gap-y-5 sm:grid-cols-3 border-t border-[#FECDD3] pt-6">
                 {detailGrid.map(({ label, value }) => (
                   <div key={label}>
                     <p className="text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">
                       {label}
                     </p>
-                    <p className="mt-1 text-sm font-medium text-[#1A1916]">{value}</p>
+                    <p className="mt-1 text-sm font-medium text-[#1C1917]">{value}</p>
                   </div>
                 ))}
               </div>
@@ -141,7 +141,7 @@ export default function Profile() {
             {/* Family + Looking for */}
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {user.familyDetails && (
-                <div className="rounded-2xl border border-[#E8E0D5] bg-[#FBF8F4] p-4">
+                <div className="rounded-2xl border border-[#FECDD3] bg-[#FFF8F8] p-4">
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">
                     Family
                   </p>
@@ -149,7 +149,7 @@ export default function Profile() {
                 </div>
               )}
               {(user.lookingFor || user.partnerPreference) && (
-                <div className="rounded-2xl border border-[#E8E0D5] bg-[#FBF8F4] p-4">
+                <div className="rounded-2xl border border-[#FECDD3] bg-[#FFF8F8] p-4">
                   <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">
                     Looking for
                   </p>
@@ -170,7 +170,7 @@ export default function Profile() {
                   {interests.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-[#E8E0D5] bg-white px-3.5 py-1.5 text-sm text-[#5C574F]"
+                      className="rounded-full border border-[#FECDD3] bg-white px-3.5 py-1.5 text-sm text-[#5C574F]"
                     >
                       {item}
                     </span>
@@ -183,16 +183,16 @@ export default function Profile() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <button
                 onClick={handleInterest}
-                className="rounded-xl bg-[#C4782A] px-6 py-3 text-sm font-semibold text-white
+                className="rounded-xl bg-[#B91C1C] px-6 py-3 text-sm font-semibold text-white
                            shadow-sm transition-all duration-200
-                           hover:bg-[#A8651F] hover:shadow-md active:scale-[0.98]"
+                           hover:bg-[#991B1B] hover:shadow-md active:scale-[0.98]"
               >
                 Send an interest
               </button>
               <button
                 type="button"
-                className="rounded-xl border border-[#E8E0D5] bg-white px-6 py-3 text-sm font-semibold text-[#5C574F]
-                           transition hover:border-[#C4782A] hover:text-[#C4782A]"
+                className="rounded-xl border border-[#FECDD3] bg-white px-6 py-3 text-sm font-semibold text-[#5C574F]
+                           transition hover:border-[#B91C1C] hover:text-[#B91C1C]"
               >
                 Share with family
               </button>

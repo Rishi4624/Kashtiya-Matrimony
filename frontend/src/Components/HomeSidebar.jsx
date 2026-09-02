@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 export default function HomeSidebar({ userName = 'Rishi' }) {
@@ -18,7 +18,7 @@ export default function HomeSidebar({ userName = 'Rishi' }) {
         <div>
           <p className="font-serif text-2xl font-medium text-[#1f1f1f]">Hi {userName}!</p>
           <p className="text-sm text-[#5F5B56]">
-            <span className="text-[#C4782A]">Edit Profile</span>
+            <span className="text-[#B91C1C]">Edit Profile</span>
           </p>
         </div>
       </div>
@@ -32,12 +32,12 @@ export default function HomeSidebar({ userName = 'Rishi' }) {
             className={({ isActive }) =>
               [
                 'flex w-full items-center justify-between rounded-xl px-3 py-3 text-left transition',
-                isActive ? 'bg-[#efe7e0] text-[#1A1916]' : 'text-[#2e2b28] hover:bg-[#efe7e0]',
+                isActive ? 'bg-[#efe7e0] text-[#1C1917]' : 'text-[#2e2b28] hover:bg-[#efe7e0]',
               ].join(' ')
             }
           >
             <span className="flex items-center gap-3">
-              <span className="text-base text-[#C4782A]">{item.icon}</span>
+              <span className="text-base text-[#B91C1C]">{item.icon}</span>
               <span>{item.label}</span>
             </span>
             <span className="text-[#5a564f]">›</span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+﻿import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contex/AuthContex.jsx'
 import updateUser from '../api/updateUser.js'
@@ -38,12 +38,12 @@ export default function User() {
 
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#F7F3EE]">
+      <div className="flex min-h-screen items-center justify-center bg-[#FFF5F5]">
         <div className="text-center">
           <p className="mb-4 text-lg text-[#5C574F]">Please log in to view your profile</p>
           <button
             onClick={() => navigate('/login')}
-            className="rounded-xl bg-[#C4782A] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#A8651F]"
+            className="rounded-xl bg-[#B91C1C] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[#991B1B]"
           >
             Go to Login
           </button>
@@ -202,16 +202,16 @@ export default function User() {
   ].filter((item) => item.value)
 
   const inputClass =
-    'w-full rounded-xl border border-[#E8E0D5] bg-white px-3 py-2.5 text-sm text-[#2C2A26] focus:border-[#C4782A] focus:ring-2 focus:ring-[#C4782A]/20 outline-none'
+    'w-full rounded-xl border border-[#FECDD3] bg-white px-3 py-2.5 text-sm text-[#2C2A26] focus:border-[#B91C1C] focus:ring-2 focus:ring-[#B91C1C]/20 outline-none'
 
   return (
-    <div className="min-h-screen bg-[#F7F3EE]">
+    <div className="min-h-screen bg-[#FFF5F5]">
       <div className="mx-auto max-w-6xl px-3 py-6 sm:px-6 sm:py-12">
         {/* Top bar */}
         <div className="mb-6 flex flex-col items-start gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A] transition hover:text-[#A8651F]"
+            className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C] transition hover:text-[#991B1B]"
           >
             ← Back
           </button>
@@ -220,7 +220,7 @@ export default function User() {
             {!isEditing ? (
               <button
                 onClick={handleEdit}
-                className="w-full rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F] sm:w-auto"
+                className="w-full rounded-xl bg-[#B91C1C] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#991B1B] sm:w-auto"
               >
                 Edit profile
               </button>
@@ -228,13 +228,13 @@ export default function User() {
               <>
                 <button
                   onClick={handleCancel}
-                  className="w-full rounded-xl border border-[#E8E0D5] bg-white px-5 py-2.5 text-sm font-semibold text-[#5C574F] transition hover:border-[#C4782A] sm:w-auto"
+                  className="w-full rounded-xl border border-[#FECDD3] bg-white px-5 py-2.5 text-sm font-semibold text-[#5C574F] transition hover:border-[#B91C1C] sm:w-auto"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSave}
-                  className="w-full rounded-xl bg-[#C4782A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F] sm:w-auto"
+                  className="w-full rounded-xl bg-[#B91C1C] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#991B1B] sm:w-auto"
                 >
                   Save
                 </button>
@@ -247,8 +247,8 @@ export default function User() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-14">
           {/* LEFT: PHOTO */}
           <div className="lg:col-span-5">
-            <div className="overflow-hidden rounded-3xl border border-[#E8E0D5] bg-[#FBF8F4] shadow-sm">
-              <div className="relative aspect-[4/5] overflow-hidden bg-[#E8E0D5]">
+            <div className="overflow-hidden rounded-3xl border border-[#FECDD3] bg-[#FFF8F8] shadow-sm">
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#FECDD3]">
                 <img
                   src={displayAvatar || 'https://via.placeholder.com/600x750'}
                   alt={user.name}
@@ -257,7 +257,7 @@ export default function User() {
                 {isEditing && (
                   <button
                     onClick={() => avatarInputRef.current?.click()}
-                    className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#C4782A] text-white shadow-lg transition hover:bg-[#A8651F]"
+                    className="absolute bottom-4 right-4 flex h-11 w-11 items-center justify-center rounded-full bg-[#B91C1C] text-white shadow-lg transition hover:bg-[#991B1B]"
                     title="Change photo"
                   >
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -283,7 +283,7 @@ export default function User() {
                 {(isEditing || true) && (
                   <button
                     onClick={() => postsInputRef.current?.click()}
-                    className="text-xs font-medium text-[#C4782A] hover:text-[#A8651F]"
+                    className="text-xs font-medium text-[#B91C1C] hover:text-[#991B1B]"
                   >
                     + Add
                   </button>
@@ -293,7 +293,7 @@ export default function User() {
               {displayPosts.length > 0 ? (
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {displayPosts.map((post, index) => (
-                    <div key={index} className="group relative aspect-square overflow-hidden rounded-xl border border-[#E8E0D5] bg-white">
+                    <div key={index} className="group relative aspect-square overflow-hidden rounded-xl border border-[#FECDD3] bg-white">
                       <img src={post} alt={`Post ${index + 1}`} className="h-full w-full object-cover" />
                       {isEditing && (
                         <button
@@ -307,7 +307,7 @@ export default function User() {
                   ))}
                 </div>
               ) : (
-                <p className="rounded-xl border border-dashed border-[#E8E0D5] py-8 text-center text-sm text-[#A39E96]">
+                <p className="rounded-xl border border-dashed border-[#FECDD3] py-8 text-center text-sm text-[#A39E96]">
                   No photos yet
                 </p>
               )}
@@ -401,7 +401,7 @@ export default function User() {
                   <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-[#A39E96]">Hobbies</label>
                   <div className="mb-2 flex flex-wrap gap-2">
                     {displayHobbies.map((h) => (
-                      <span key={h} className="inline-flex items-center gap-1 rounded-full border border-[#E8E0D5] bg-white px-3 py-1 text-sm text-[#5C574F]">
+                      <span key={h} className="inline-flex items-center gap-1 rounded-full border border-[#FECDD3] bg-white px-3 py-1 text-sm text-[#5C574F]">
                         {h}
                         <button type="button" onClick={() => removeHobby(h)} className="text-[#A39E96] hover:text-red-500">×</button>
                       </span>
@@ -409,7 +409,7 @@ export default function User() {
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
                     <input value={hobbyInput} onChange={(e) => setHobbyInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addHobby())} placeholder="Add hobby..." className={inputClass} />
-                    <button type="button" onClick={addHobby} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 py-2.5 text-sm font-medium text-[#C4782A] sm:w-auto">Add</button>
+                    <button type="button" onClick={addHobby} className="shrink-0 rounded-xl bg-[#B91C1C]/10 px-4 py-2.5 text-sm font-medium text-[#B91C1C] sm:w-auto">Add</button>
                   </div>
                 </div>
 
@@ -418,7 +418,7 @@ export default function User() {
                   <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-[#A39E96]">Interests</label>
                   <div className="mb-2 flex flex-wrap gap-2">
                     {displayInterests.map((i) => (
-                      <span key={i} className="inline-flex items-center gap-1 rounded-full border border-[#E8E0D5] bg-white px-3 py-1 text-sm text-[#5C574F]">
+                      <span key={i} className="inline-flex items-center gap-1 rounded-full border border-[#FECDD3] bg-white px-3 py-1 text-sm text-[#5C574F]">
                         {i}
                         <button type="button" onClick={() => removeInterest(i)} className="text-[#A39E96] hover:text-red-500">×</button>
                       </span>
@@ -426,17 +426,17 @@ export default function User() {
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
                     <input value={interestInput} onChange={(e) => setInterestInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addInterest())} placeholder="Add interest..." className={inputClass} />
-                    <button type="button" onClick={addInterest} className="shrink-0 rounded-xl bg-[#C4782A]/10 px-4 py-2.5 text-sm font-medium text-[#C4782A] sm:w-auto">Add</button>
+                    <button type="button" onClick={addInterest} className="shrink-0 rounded-xl bg-[#B91C1C]/10 px-4 py-2.5 text-sm font-medium text-[#B91C1C] sm:w-auto">Add</button>
                   </div>
                 </div>
               </div>
             ) : (
               /* ===== VIEW MODE (same as Profile) ===== */
               <>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#C4782A]">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#B91C1C]">
                   {[user.religion, user.location].filter(Boolean).join(' · ') || 'My profile'}
                 </p>
-                <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#1A1916]">{user.name}</h1>
+                <h1 className="font-serif text-3xl sm:text-4xl font-medium text-[#1C1917]">{user.name}</h1>
                 <p className="mt-2 text-sm text-[#5C574F]">
                   {[user.age, user.occupation].filter(Boolean).join(' · ') || '—'}
                 </p>
@@ -445,11 +445,11 @@ export default function User() {
                 </p>
 
                 {detailGrid.length > 0 && (
-                  <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-5 border-t border-[#E8E0D5] pt-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-5 border-t border-[#FECDD3] pt-6 sm:grid-cols-2 lg:grid-cols-3">
                     {detailGrid.map(({ label, value }) => (
                       <div key={label}>
                         <p className="text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">{label}</p>
-                        <p className="mt-1 text-sm font-medium text-[#1A1916]">{value}</p>
+                        <p className="mt-1 text-sm font-medium text-[#1C1917]">{value}</p>
                       </div>
                     ))}
                   </div>
@@ -458,13 +458,13 @@ export default function User() {
                 {(user.familyDetails || user.email || user.phone) && (
                   <div className="mt-8 grid gap-4 sm:grid-cols-2">
                     {user.familyDetails && (
-                      <div className="rounded-2xl border border-[#E8E0D5] bg-[#FBF8F4] p-4">
+                      <div className="rounded-2xl border border-[#FECDD3] bg-[#FFF8F8] p-4">
                         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">Family</p>
                         <p className="text-sm leading-relaxed text-[#5C574F]">{user.familyDetails}</p>
                       </div>
                     )}
                     {(user.email || user.phone) && (
-                      <div className="rounded-2xl border border-[#E8E0D5] bg-[#FBF8F4] p-4">
+                      <div className="rounded-2xl border border-[#FECDD3] bg-[#FFF8F8] p-4">
                         <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">Contact</p>
                         {user.email && <p className="text-sm text-[#5C574F]">{user.email}</p>}
                         {user.phone && <p className="mt-1 text-sm text-[#5C574F]">{user.phone}</p>}
@@ -478,7 +478,7 @@ export default function User() {
                     <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-[#A39E96]">Interests & hobbies</p>
                     <div className="flex flex-wrap gap-2">
                       {[...displayInterests, ...displayHobbies].map((item) => (
-                        <span key={item} className="rounded-full border border-[#E8E0D5] bg-white px-3.5 py-1.5 text-sm text-[#5C574F]">
+                        <span key={item} className="rounded-full border border-[#FECDD3] bg-white px-3.5 py-1.5 text-sm text-[#5C574F]">
                           {item}
                         </span>
                       ))}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 
 export default function PublicInfo({ type }) {
   const isPricing = type === 'pricing'
@@ -23,7 +23,7 @@ export default function PublicInfo({ type }) {
   }
 
   const inputClass =
-    'w-full rounded-xl border border-[#E8E0D5] bg-white px-3.5 py-2.5 text-sm text-[#2C2A26] outline-none transition focus:border-[#C4782A] focus:ring-2 focus:ring-[#C4782A]/20'
+    'w-full rounded-xl border border-[#FECDD3] bg-white px-3.5 py-2.5 text-sm text-[#1C1917] outline-none transition focus:border-[#B91C1C] focus:ring-2 focus:ring-[#B91C1C]/20'
 
   /* ───────────── PRICING ───────────── */
   if (isPricing) {
@@ -86,12 +86,12 @@ export default function PublicInfo({ type }) {
     ]
 
     return (
-      <main className="min-h-[calc(100vh-4rem)] bg-[#FDF8F3] px-4 py-14 text-[#2C2A26] sm:px-6 sm:py-16">
+      <main className="min-h-[calc(100vh-4rem)] bg-[#FFF5F5] px-4 py-14 text-[#1C1917] sm:px-6 sm:py-16">
         <section className="mx-auto max-w-5xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C4782A]">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#B91C1C]">
             Kashtiya Matrimony
           </p>
-          <h1 className="mt-4 font-serif text-4xl font-medium text-[#1A1916] sm:text-5xl">
+          <h1 className="mt-4 font-serif text-4xl font-medium text-[#1C1917] sm:text-5xl">
             Simple plans for meaningful beginnings
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#5C574F]">
@@ -107,21 +107,21 @@ export default function PublicInfo({ type }) {
               key={plan.name}
               className={`relative flex flex-col rounded-3xl border bg-white p-6 sm:p-7 shadow-sm transition ${
                 plan.highlight
-                  ? 'border-[#C4782A] shadow-md ring-1 ring-[#C4782A]/20'
-                  : 'border-[#E8E0D5]'
+                  ? 'border-[#B91C1C] shadow-md ring-1 ring-[#B91C1C]/20'
+                  : 'border-[#FECDD3]'
               }`}
             >
               {plan.badge && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#C4782A] px-3 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#B91C1C] px-3 py-0.5 text-[11px] font-semibold uppercase tracking-wider text-white">
                   {plan.badge}
                 </span>
               )}
 
               <div className="mb-5 text-left">
-                <h2 className="font-serif text-xl font-medium text-[#1A1916]">{plan.name}</h2>
+                <h2 className="font-serif text-xl font-medium text-[#1C1917]">{plan.name}</h2>
                 <p className="mt-1 text-sm text-[#5C574F]">{plan.desc}</p>
                 <div className="mt-4 flex items-baseline gap-1.5">
-                  <span className="font-serif text-3xl font-medium text-[#1A1916]">{plan.price}</span>
+                  <span className="font-serif text-3xl font-medium text-[#1C1917]">{plan.price}</span>
                   <span className="text-sm text-[#A39E96]">{plan.period}</span>
                 </div>
               </div>
@@ -129,7 +129,7 @@ export default function PublicInfo({ type }) {
               <ul className="mb-6 flex-1 space-y-2.5 text-left">
                 {plan.features.map((f) => (
                   <li key={f} className="flex gap-2.5 text-sm text-[#5C574F]">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#C4782A]/10 text-[#C4782A]">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#B91C1C]/10 text-[#B91C1C]">
                       <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
@@ -143,8 +143,8 @@ export default function PublicInfo({ type }) {
                 href={plan.href}
                 className={`block w-full rounded-xl py-3 text-center text-sm font-semibold transition ${
                   plan.highlight
-                    ? 'bg-[#C4782A] text-white hover:bg-[#A8651F]'
-                    : 'border border-[#E8E0D5] bg-[#FDF8F3] text-[#1A1916] hover:border-[#C4782A] hover:text-[#C4782A]'
+                    ? 'bg-[#B91C1C] text-white hover:bg-[#991B1B]'
+                    : 'border border-[#FECDD3] bg-[#FFF5F5] text-[#1C1917] hover:border-[#B91C1C] hover:text-[#B91C1C]'
                 }`}
               >
                 {plan.cta}
@@ -154,8 +154,8 @@ export default function PublicInfo({ type }) {
         </section>
 
         {/* Conditions */}
-        <section className="mx-auto mt-14 max-w-3xl rounded-2xl border border-[#E8E0D5] bg-white p-6 sm:p-8 text-left shadow-sm">
-          <h3 className="font-serif text-lg font-medium text-[#1A1916]">Subscription terms</h3>
+        <section className="mx-auto mt-14 max-w-3xl rounded-2xl border border-[#FECDD3] bg-white p-6 sm:p-8 text-left shadow-sm">
+          <h3 className="font-serif text-lg font-medium text-[#1C1917]">Subscription terms</h3>
           <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-[#5C574F]">
             <li>• Plans are billed as a one-time amount for the selected duration (3 or 6 months). No auto-renewal unless you choose it.</li>
             <li>• Free plan remains available forever; paid features unlock only while your subscription is active.</li>
@@ -171,12 +171,12 @@ export default function PublicInfo({ type }) {
 
   /* ───────────── CONTACT ───────────── */
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-[#FDF8F3] px-4 py-14 text-[#2C2A26] sm:px-6 sm:py-16">
+    <main className="min-h-[calc(100vh-4rem)] bg-[#FFF5F5] px-4 py-14 text-[#1C1917] sm:px-6 sm:py-16">
       <section className="mx-auto max-w-5xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#C4782A]">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#B91C1C]">
           Kashtiya Matrimony
         </p>
-        <h1 className="mt-4 font-serif text-4xl font-medium text-[#1A1916] sm:text-5xl">
+        <h1 className="mt-4 font-serif text-4xl font-medium text-[#1C1917] sm:text-5xl">
           We are here to help
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-[#5C574F]">
@@ -187,8 +187,8 @@ export default function PublicInfo({ type }) {
       <section className="mx-auto mt-12 grid max-w-5xl gap-8 lg:grid-cols-5">
         {/* Company details */}
         <div className="space-y-5 lg:col-span-2">
-          <div className="rounded-2xl border border-[#E8E0D5] bg-white p-6 shadow-sm">
-            <h2 className="font-serif text-xl font-medium text-[#1A1916]">Company</h2>
+          <div className="rounded-2xl border border-[#FECDD3] bg-white p-6 shadow-sm">
+            <h2 className="font-serif text-xl font-medium text-[#1C1917]">Company</h2>
             <p className="mt-3 text-sm leading-relaxed text-[#5C574F]">
               Kashtiya Matrimony Pvt. Ltd.
               <br />
@@ -196,7 +196,7 @@ export default function PublicInfo({ type }) {
             </p>
             <div className="mt-5 space-y-3 text-sm text-[#5C574F]">
               <p className="flex gap-2">
-                <span className="shrink-0 text-[#C4782A]">📍</span>
+                <span className="shrink-0 text-[#B91C1C]">📍</span>
                 <span>
                   4th Floor, Orchid Business Park
                   <br />
@@ -206,40 +206,40 @@ export default function PublicInfo({ type }) {
                 </span>
               </p>
               <p className="flex gap-2">
-                <span className="shrink-0 text-[#C4782A]">🕒</span>
+                <span className="shrink-0 text-[#B91C1C]">🕒</span>
                 <span>Mon–Sat · 10:00 AM – 7:00 PM IST</span>
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-[#E8E0D5] bg-white p-6 shadow-sm">
-            <h2 className="font-serif text-xl font-medium text-[#1A1916]">Reach us</h2>
+          <div className="rounded-2xl border border-[#FECDD3] bg-white p-6 shadow-sm">
+            <h2 className="font-serif text-xl font-medium text-[#1C1917]">Reach us</h2>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#A39E96]">General</p>
-                <a href="mailto:hello@kashtiya.com" className="text-[#C4782A] hover:underline">
+                <a href="mailto:hello@kashtiya.com" className="text-[#B91C1C] hover:underline">
                   hello@kashtiya.com
                 </a>
               </li>
               <li>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#A39E96]">Support</p>
-                <a href="mailto:support@kashtiya.com" className="text-[#C4782A] hover:underline">
+                <a href="mailto:support@kashtiya.com" className="text-[#B91C1C] hover:underline">
                   support@kashtiya.com
                 </a>
               </li>
               <li>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#A39E96]">Safety &amp; abuse</p>
-                <a href="mailto:safety@kashtiya.com" className="text-[#C4782A] hover:underline">
+                <a href="mailto:safety@kashtiya.com" className="text-[#B91C1C] hover:underline">
                   safety@kashtiya.com
                 </a>
               </li>
               <li>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#A39E96]">Phone</p>
-                <a href="tel:+912240001234" className="text-[#2C2A26] hover:text-[#C4782A]">
+                <a href="tel:+912240001234" className="text-[#1C1917] hover:text-[#B91C1C]">
                   +91 22 4000 1234
                 </a>
                 <br />
-                <a href="tel:+919876543210" className="text-[#2C2A26] hover:text-[#C4782A]">
+                <a href="tel:+919876543210" className="text-[#1C1917] hover:text-[#B91C1C]">
                   +91 98765 43210
                 </a>
               </li>
@@ -248,15 +248,15 @@ export default function PublicInfo({ type }) {
         </div>
 
         {/* Message form */}
-        <div className="rounded-2xl border border-[#E8E0D5] bg-white p-6 sm:p-8 shadow-sm lg:col-span-3">
-          <h2 className="font-serif text-xl font-medium text-[#1A1916]">Send a message</h2>
+        <div className="rounded-2xl border border-[#FECDD3] bg-white p-6 sm:p-8 shadow-sm lg:col-span-3">
+          <h2 className="font-serif text-xl font-medium text-[#1C1917]">Send a message</h2>
           <p className="mt-1 text-sm text-[#5C574F]">
             We usually reply within one business day.
           </p>
 
           {submitted ? (
-            <div className="mt-8 rounded-xl border border-[#C4782A]/30 bg-[#C4782A]/5 p-6 text-center">
-              <p className="font-serif text-lg text-[#1A1916]">Thank you for writing in.</p>
+            <div className="mt-8 rounded-xl border border-[#B91C1C]/30 bg-[#B91C1C]/5 p-6 text-center">
+              <p className="font-serif text-lg text-[#1C1917]">Thank you for writing in.</p>
               <p className="mt-2 text-sm text-[#5C574F]">
                 We have received your message and will get back to you shortly.
               </p>
@@ -266,7 +266,7 @@ export default function PublicInfo({ type }) {
                   setSubmitted(false)
                   setForm({ name: '', email: '', phone: '', subject: '', message: '' })
                 }}
-                className="mt-4 text-sm font-medium text-[#C4782A] hover:underline"
+                className="mt-4 text-sm font-medium text-[#B91C1C] hover:underline"
               >
                 Send another message
               </button>
@@ -355,7 +355,7 @@ export default function PublicInfo({ type }) {
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-[#C4782A] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A8651F] sm:w-auto sm:px-8"
+                className="w-full rounded-xl bg-[#B91C1C] py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#991B1B] sm:w-auto sm:px-8"
               >
                 Send message
               </button>

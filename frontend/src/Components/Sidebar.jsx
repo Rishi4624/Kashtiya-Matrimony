@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+﻿import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contex/AuthContex.jsx'
 
 export default function Sidebar({ isAuthenticated, setIsAuthenticated }) {
@@ -13,21 +13,21 @@ export default function Sidebar({ isAuthenticated, setIsAuthenticated }) {
     [
       'flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200',
       isActive
-        ? 'bg-[#F1E6D9] text-[#C4782A] shadow-sm'
-        : 'text-[#5C574F] hover:bg-[#F5F1EA] hover:text-[#C4782A]',
+        ? 'bg-[#F1E6D9] text-[#B91C1C] shadow-sm'
+        : 'text-[#5C574F] hover:bg-[#F5F1EA] hover:text-[#B91C1C]',
     ].join(' ')
 
   return (
-    <aside className="fixed left-0 top-16 z-40 flex h-[calc(100vh-4rem)] w-60 flex-col border-r border-[#E8E0D5] bg-[#FBF8F4] px-3 py-5">
+    <aside className="fixed left-0 top-16 z-40 flex h-[calc(100vh-4rem)] w-60 flex-col border-r border-[#FECDD3] bg-[#FFF8F8] px-3 py-5">
 
       {/* User greeting */}
       {user && (
-        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-[#E8E0D5] bg-white px-4 py-3 shadow-sm">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C4782A] text-sm font-bold text-white">
+        <div className="mb-5 flex items-center gap-3 rounded-2xl border border-[#FECDD3] bg-white px-4 py-3 shadow-sm">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#B91C1C] text-sm font-bold text-white">
             {user.name?.charAt(0)?.toUpperCase() || 'U'}
           </div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-[#1A1916]">{user.name}</p>
+            <p className="truncate text-sm font-semibold text-[#1C1917]">{user.name}</p>
             <p className="truncate text-xs text-[#A39E96]">{user.email}</p>
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Sidebar({ isAuthenticated, setIsAuthenticated }) {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               {requestCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#C4782A] text-[9px] font-bold text-white">
+                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#B91C1C] text-[9px] font-bold text-white">
                   {requestCount}
                 </span>
               )}
