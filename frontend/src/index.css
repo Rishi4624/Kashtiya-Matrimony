@@ -1,1 +1,20 @@
-@import "tailwindcss";  
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Poppins', sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+  h1, h2, h3, h4, h5, h6, .font-serif, .font-heading {
+    font-family: var(--font-serif);
+    font-weight: 600;
+  }
+  
+  /* Apply Poppins to specific text classes globally if needed, 
+     but overriding h1-h6 handles most headings */
+}

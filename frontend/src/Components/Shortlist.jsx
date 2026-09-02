@@ -44,7 +44,7 @@ export default function Shortlist() {
                         </button>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <div className="flex flex-col gap-4 max-w-3xl">
                         {shortlistedUsers.map((user, index) => (
                             <UserCard
                                 key={user._id || user.id || index}
