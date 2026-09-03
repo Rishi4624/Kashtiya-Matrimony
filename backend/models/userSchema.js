@@ -11,6 +11,28 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
 
+
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  isPremium: {
+    type: Boolean,
+    default: false
+  },
+  amountPaid: {
+    type: Number,
+    default: 0
+  },
+  premiumDate: {
+    type: Date
+  },
+
   password: {
     type: String,
     required: true
