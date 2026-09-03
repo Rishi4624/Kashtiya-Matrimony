@@ -56,6 +56,7 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault()
+    console.log("login api called");
     const response = await loginUser(loginData.email, loginData.password)
     console.log('Login response:', response);
     if (response.success === true) {
@@ -66,9 +67,10 @@ export default function AuthPage({ setIsAuthenticated, initialMode = 'login' }) 
         setUsers(profilesResponse)
       }
       navigate('/home')
-    } else {
-      alert(response.message)
-    }
+    } 
+    console.log({response});
+    alert(response.message)
+
   }
 
   const validateProfileStep = () => {

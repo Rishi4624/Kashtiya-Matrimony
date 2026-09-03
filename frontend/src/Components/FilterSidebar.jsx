@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 
 export const EMPTY_FILTERS = {
     minAge: '',
@@ -256,7 +256,7 @@ export default function FilterSidebar({ filters, onFilterChange, onToggleHobby, 
         <aside className="flex h-full flex-col" style={{ background: 'linear-gradient(160deg, #FFF8F8 0%, #FFF0F0 100%)' }}>
 
             {/* ── Gradient header ── */}
-            <div className="shrink-0 px-5 pt-6 pb-4" style={{ background: 'linear-gradient(135deg, #B91C1C 0%, #EF4444 100%)' }}>
+            <div className="shrink-0 px-5 pt-6 pb-4" style={{ background: '#7B0A1A' }}>
                 <div className="flex items-start justify-between">
                     <div>
                         <h2 className="text-lg font-bold text-white tracking-tight">Filters</h2>
@@ -314,7 +314,7 @@ export default function FilterSidebar({ filters, onFilterChange, onToggleHobby, 
                 <button
                     onClick={onApply}
                     className="w-full rounded-2xl py-3.5 text-sm font-bold text-white shadow-lg shadow-[#B91C1C]/30 transition-all duration-200 hover:shadow-xl hover:shadow-[#B91C1C]/40 active:scale-[0.98]"
-                    style={{ background: 'linear-gradient(135deg, #B91C1C 0%, #EF4444 100%)' }}
+                    style={{ background: '#841423ff' }}
                 >
                     Show {filteredCount} Profiles
                 </button>

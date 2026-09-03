@@ -1,5 +1,5 @@
 import { StrictMode, useEffect, useState } from 'react';
-import { BrowserRouter, NavLink, Route, Routes, useNavigate, Navigate } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Routes, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Home from './Components/Home'
 import AboutUs from './Components/AboutUs'
@@ -13,15 +13,28 @@ import ChatList from './Components/ChatList'
 import Landing from './Components/LandingPage'
 import PublicNavbar from './Components/PublicNavbar'
 import PublicInfo from './Components/PublicInfo'
+import Footer from './Components/Footer'
 import RequestsPage from './Components/RequestsPage.jsx'
 import Shortlist from './Components/Shortlist.jsx'
 import { useAuth } from './contex/AuthContex.jsx'
+
+// Admin Components
+import AdminLayout from './Components/Admin/AdminLayout'
+import AdminDashboard from './Components/Admin/AdminDashboard'
+import UserManagement from './Components/Admin/UserManagement'
+import VerificationQueue from './Components/Admin/VerificationQueue'
+import Transactions from './Components/Admin/Transactions'
+import Revenue from './Components/Admin/Revenue'
+
 import './App.css'
 
 function App() {
   const navigate = useNavigate();
-  const { users } = useAuth()
+  const location = useLocation();
+  const { user, users } = useAuth()
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  const showFooter = !location.pathname.startsWith('/login') && !location.pathname.startsWith('/register');
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -69,7 +82,19 @@ function App() {
             <Route path="/register" element={<AuthPage setIsAuthenticated={setIsAuthenticated} initialMode="register" />} />
             <Route path="*" element={<Landing />} />
           </Routes>
+          {showFooter && <Footer />}
         </>
+      ) : user?.role === 'admin' ? (
+        <AdminLayout>
+          <Routes>
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/verifications" element={<VerificationQueue />} />
+            <Route path="/admin/transactions" element={<Transactions />} />
+            <Route path="/admin/revenue" element={<Revenue />} />
+            <Route path="*" element={<Navigate to="/admin" replace />} />
+          </Routes>
+        </AdminLayout>
       ) : (
         <>
           <Navbar

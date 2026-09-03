@@ -33,9 +33,9 @@ export default function ChatList() {
 
   return (
     <main className="min-h-[calc(100vh-65px)] bg-[#FBF7F2] px-4 py-8 sm:px-6">
-      <section className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-[#EDE6DC] bg-white shadow-lg shadow-[#C45C3E]/10">
+      <section className="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-[#EDE6DC] bg-white shadow-lg shadow-[#7B0A1A]/10">
         <header className="border-b border-[#EDE6DC] px-5 py-5 sm:px-7">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#C45C3E]">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#7B0A1A]">
             Messages
           </p>
           <h1 className="mt-1 font-serif text-2xl font-medium text-[#2C2419]">
@@ -48,7 +48,7 @@ export default function ChatList() {
 
         {connections.length === 0 ? (
           <div className="px-6 py-16 text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#C45C3E]/10 text-2xl">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#7B0A1A]/10 text-2xl">
               💬
             </div>
             <h2 className="font-serif font-medium text-[#2C2419]">No chats yet</h2>
@@ -58,7 +58,7 @@ export default function ChatList() {
             <button
               type="button"
               onClick={() => navigate('/home')}
-              className="mt-5 rounded-full bg-[#C45C3E] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#A84B32]"
+              className="mt-5 rounded-full bg-[#7B0A1A] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#7B0A1A]"
             >
               Find matches
             </button>
@@ -89,7 +89,7 @@ export default function ChatList() {
                         'Connected match'}
                     </span>
                   </span>
-                  <span className="text-xl text-[#C45C3E]" aria-hidden="true">
+                  <span className="text-xl text-[#7B0A1A]" aria-hidden="true">
                     ›
                   </span>
                 </button>
